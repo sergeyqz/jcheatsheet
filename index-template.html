@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+
+        <title>J Language Cheatsheet</title>
+
+        <script type="module">
+         document.documentElement.classList.remove('no-js');
+         document.documentElement.classList.add('js');
+        </script>
+
+        <meta name="description" content="J Language Cheatsheet largely based on NuVoc. A list of J primitives with short descriptions, links to NuVoc and some examples.">
+
+        <link rel="canonical" href="https://sergeyqz.github.io/jcheatsheet">
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <!-- <link rel="icon" href="/favicon.ico"> -->
+        <!-- <link rel="icon" href="/favicon.svg" type="image/svg+xml"> -->
+        <!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
+
+        <style>
+         @font-face {
+	     font-family: 'Iosevka Fixed Web';
+	     font-display: swap;
+	     font-weight: 500;
+	     font-stretch: normal;
+	     font-style: normal;
+	     src: url('static/woff2/iosevka-fixed-medium.woff2') format('woff2'), url('static/ttf/iosevka-fixed-medium.ttf') format('truetype');
+         }
+
+         /* ::selection {
+            background-color: cyan;
+            }
+          */
+         body {
+             font-family: sans-serif;
+         }
+         tr.verb > td.code {
+             background: #ddccff;
+         }
+         tr.adverb > td.code {
+             background: #cceeff;
+         }
+         tr.conj > td.code {
+             background: #eeffcc;
+         }
+         tr.noun > td.code {
+             background: #ffccee;
+         }
+         tr.copula > td.code {
+             background: #dddddd;
+         }
+         tr.control > td.code {
+             background: #eeaaaa;
+         }
+         tr:hover {
+             outline: 1px solid #999999;
+         }
+         code, .code {
+             font-family: 'Iosevka Fixed Web', monospace;
+	     font-weight: 500;
+         }
+         code {
+             font-size: 1.1rem;
+             background: #f0f0f0;
+             outline: #e6e6e6 solid 1px;
+             border-radius: 2px;
+             padding: 0 3px;
+         }
+         .code {
+             font-size: 1.2rem;
+         }
+         td {
+             white-space: nowrap;
+         }
+         td.code {
+             padding: 1px 1rem;
+         }
+         td.name {
+             padding: 0 .5rem;
+             text-align: right;
+         }
+         td.desc {
+             padding: 0 .5rem;
+         }
+         .rank {
+             /* font-size: .8rem; */
+             color: #00000033;
+         }
+         table {
+             border-collapse: collapse;
+         }
+         a {
+             text-decoration: none;
+         }
+         a:hover {
+             text-decoration: underline;
+         }
+        </style>
+    </head>
+
+    <body>
+        <h1>J Language Cheatsheet</h1>
+
+        <p>The table is largely based on <a href="https://code.jsoftware.com/wiki/NuVoc">NuVoc</a> (accessed around April 2021). It contains all J primitives with short descriptions, links to NuVoc and some examples. The order and the background colors are the same as in NuVoc table. The source of the table is on <a href="https://github.com/sergeyqz/jcheatsheet">GitHub</a>.</p>
+
+        <p>Types: </p>
+
+        <ul>
+            <li> <code>x</code>, <code>y</code>: any noun </li>
+            <li> <code>a</code>, <code>b</code>: numeric scalar </li>
+            <li> <code>A</code>, <code>B</code>: numeric array </li>
+            <li> <code>C</code>, <code>D</code>: complex numeric array </li>
+            <li> <code>g</code>, <code>h</code>: boolean scalar </li>
+            <li> <code>G</code>, <code>H</code>: boolean array </li>
+            <li> <code>R</code>, <code>S</code>: character array </li>
+            <li> <code>u</code>, <code>v</code>: verb operands of modifiers </li>
+            <li> <code>m</code>, <code>n</code>: noun operands of modifiers </li>
+        </ul>
+        <table>
+          INSERT-ROWS
+        </table>
+    </body>
+</html>

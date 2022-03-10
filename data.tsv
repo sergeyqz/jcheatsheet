@@ -1,0 +1,256 @@
+	Done	252														
+	Total	252														
+	Link	Type	Name	Opt	LN	LMO	P	RMO	RN	LR	RR	Description	full			lhsLength
+	eq	verb	Self-Classify				=		y		_	compare unique items against all items; consider using ``i.~ RN``	full	0		0
+	eq#dyadic	verb	Equal		x		=		y	0	0	compare corresponding atoms, ``1`` if equal, ``0`` if not; to compare two entire nouns for equality, use Match ``-:``	full	251	x 	2
+	eqdot	copula	Is (Local)				=.					private assignment, supports unpacking	full	1		0
+	eqco	copula	Is (Global)				=:					public assignment, supports unpacking	full			0
+	lt	verb	Box				<		y		_	convert to boxed form, useful for heterogeneous arrays	full			0
+	lt#dyadic	verb	Less Than		A		<		B	0	0	compare corresponding atoms, wherever ``LN`` is less than ``RN``, return ``1``, else ``0``	full		A 	2
+	ltdot	verb	Floor				<.		B		0	largest integer less than or equal to ``RN``	full			0
+	ltdot#ComplexFloor	verb	Complex Floor				<.		D		0	see docs for the description	full			0
+	ltdot#dyadic	verb	Lesser Of (Min)		A		<.		B	0	0	the lesser atoms of arguments	full		A 	2
+	ltco	verb	Decrement				<:		B		0	equivalent to ``RN - 1``	full			0
+	ltco#dyadic	verb	Less Or Equal		A		<:		B	0	0	compare corresponding atoms, wherever ``LN`` is less than, or equal to, ``RN``, return ``1``, else ``0``	full		A 	2
+	gt	verb	Open				>		y		0	open boxed elements	full			0
+	gt#dyadic	verb	Larger Than		A		>		B	0	0	compare corresponding atoms, wherever ``LN`` is greater than ``RN``, return ``1``, else ``0``	full		A 	2
+	gtdot	verb	Ceiling				>.		B		0	smallest integer greater than or equal to ``RN``, equivalent to ``- <. - RN``	full			0
+	gtdot#ComplexCeiling	verb	Complex Ceiling				>.		D		0	see Complex Floor docs for the description	full			0
+	gtdot#dyadic	verb	Larger Of (Max)		A		>.		B	0	0	the larger atoms of arguments	full		A 	2
+	gtco	verb	Increment				>:		B		0	equivalent to ``RN + 1``	full			0
+	gtco#dyadic	verb	Larger Or Equal		A		>:		B	0	0	compare corresponding atoms, wherever ``LN`` is greater than, or equal to, ``RN``, return ``1``, else ``0``	full		A 	2
+	under	noun	Negative Sign				_					as the first character of a numeric constant, acts as a negative sign	full			0
+	under	noun	Infinity				_					standing by itself, represents the value Infinity (an IEEE floating-point value)	full			0
+	underdot	noun	Indeterminate				_.					a placeholder broadly comparable with NaN (not a number)	full			0
+	underco	verb	Infinite	1	x		_:		y	_	_	Infinity (``_``), whatever the arguments happen to be	full		[x] 	4
+	plus	verb	Conjugate				+		B		0	complex conjugate of the number	full			0
+	plus#dyadic	verb	Plus		A		+		B	0	0	add two numeric nouns	full		A 	2
+	plusdot	verb	Real / Imag				+.		B		0	decompose complex number into real and imaginary parts	full			0
+	plusdot#dyadic	verb	GCD (Or)		A		+.		B	0	0	logical OR (disjunction) between Booleans, no short-circuit; Greatest Common Divisor	full		A 	2
+	plusco	verb	Double				+:		B		0	equivalent to ``2 * RN``	full			0
+	plusco#dyadic	verb	Not-Or		G		+:		H	0	0	logical NOR (Peirce's arrow), equivalent to ``-. LN +. RN``	full		G 	2
+	star	verb	Signum				*		B		0	sign of the number; a point on the unit circle for complex numbers ``RN % | RN``	full			0
+	star#dyadic	verb	Times		A		*		B	0	0	product of two numeric nouns	full		A 	2
+	stardot	verb	Length / Angle				*.		B		0	convert a complex number to polar coordinates	full			0
+	stardot#dyadic	verb	LCM (And)		A		*.		B	0	0	logical AND; Least Common Multiple in general	full		A 	2
+	starco	verb	Square				*:		B		0	square of numeric noun	full			0
+	starco#dyadic	verb	Not-And		G		*:		H	0	0	logical NAND, equivalent to ``-. LN *. RN``	full		G 	2
+	minus	verb	Negate				-		B		0	negate; don't confuse it with Negative Sign (``_``)	full			0
+	minus#dyadic	verb	Minus		A		-		B	0	0	subtract ``RN`` from ``LN``	full		A 	2
+	minusdot	verb	Not				-.		B		0	equivalent to ``1 - RN``; logical NOT for Booleans, complementary probability for interval [0, 1]	full			0
+	minusdot#dyadic	verb	Less		x		-.		y	_	_	set difference; all atoms of ``LN`` that are not in ``RN``	full		x 	2
+	minusco	verb	Halve				-:		B		0	equivalent to ``RN % 2``	full			0
+	minusco#dyadic	verb	Match		x		-:		y	_	_	``1`` if entire nouns are the same in shape and elements (but not necessarily type), ``0`` otherwise	full		x 	2
+	percent	verb	Reciprocal				%		B		0	equivalent to ``1 % RN``	full			0
+	percent#dyadic	verb	Divide		A		%		B	0	0	``LN`` divided by ``RN`` (note, that ``(0 % 0) = 0``)	full		A 	2
+	percentdot	verb	Matrix Inverse				%.		B		2	inverse matrix of square matrix ``RN`` or left inverse, if ``RN`` is not square	full			0
+	percentdot#dyadic	verb	Matrix Divide		A		%.		B	_	2	equivalent to ``(%. RN) mux LN``, where ``mux`` is ``+/ . *`` (see Matrix Product)	full		A 	2
+	percentco	verb	Square Root				%:		B		0	square root	full			0
+	percentco#dyadic	verb	Root		A		%:		B	_	_	the ``LN``-th root of ``RN``	full		A 	2
+	hat	verb	Exponential				^		B		0	the ``RN``-th power of e; the antilogarithm of a natural logarithm	full			0
+	hat#dyadic	verb	Power		A		^		B	0	0	the ``RN``-th power of ``LN`` (``0^0``, ``_^0``, ``1^_`` are equal to ``1``)	full		A 	2
+	hat#stope	verb	Stope Function		A		^	!.p	B	0	0	equivalent to ``*/LN + p * i. RN``; the falling factorial when ``p = _1``; see [Stopes](https://www.jsoftware.com/help/dictionary/samp28.htm) and [Power](https://www.jsoftware.com/help/dictionary/d200.htm) in Dictionary	full		A 	2
+	hatdot	verb	Natural Log				^.		y		0	natural logarithm	full			0
+	hatdot#dyadic	verb	Logarithm		A		^.		B	0	0	logarithm of ``LN`` to the base ``RN``	full		A 	2
+	hatco	conj	Fixed Power	1	x	u	^:	n	y	_	_	apply verb ``LMO`` (or ``LN&LMO``, if dyadic) to ``RN``, ``RMO`` times	full		[x] u 	6
+	hatco	conj	Fixed Power	1	x	u	^:	<n	y	_	_	apply verb ``LMO`` (or ``LN&LMO``, if dyadic) to ``RN``, ``(RMO)-1`` times, collecting results into a list	full		[x] u 	6
+	hatco	conj	If	1	x	u	^:	h	y	_	_	conditionally execute a verb	full		[x] u 	6
+	hatco	conj	Inverse, aka Obverse	1	x	u	^:	_1	y	_	_	execute the [obverse](https://code.jsoftware.com/wiki/Vocabulary/Inverses) (usually the inverse) of a verb, "undo the effect of applying the verb"	full		[x] u 	6
+	hatco	conj	Converge	1	x	u	^:	a:	y	_	_	apply the verb until the result stops changing	full		[x] u 	6
+	hatco	conj	Converge	1	x	u	^:	_	y	_	_	apply the verb until the result stops changing	full		[x] u 	6
+	hatco	conj	Dynamic Power	1	x	u	^:	v	y	_	_	equivalent to ``(LN&LMO)^:(LN RMO RN)`` or ``LMO^:(RMO RN)``	full		[x] u 	6
+	hatco	conj	Do-While	1	x	u	^:	v^:_	y	_	_	execute ``LMO`` repeatedly until ``RMO`` returns ``0`` or ``LMO`` returns its argument unchanged	full		[x] u 	6
+	dollar	verb	Shape Of				$		y		_	shape of the noun	full			0
+	dollar#dyadic	verb	Shape		x		$		y	1	_	reshape, return an array of items of ``RN`` whose [frame](https://code.jsoftware.com/wiki/Vocabulary/Glossary#Frame) is ``LN`` (if ``1 < #$RN``, consider ``$,``)	full		x 	2
+	dollardot	verb	Sparse				$.		B		_	convert a dense array to sparse (see [Dictionary](https://www.jsoftware.com/help/dictionary/d211.htm))	full			0
+	dollardot#dyadic	verb	Sparse		a		$.		B	_	_	a collection of functions for creating and handling sparse arrays	full		a 	2
+	dollarco	verb	Self-Reference	1	x		$:		y	_	_	recursion, denotes the longest verb that contains it (within a sentence); provide default value	full		[x] 	4
+	tilde	adverb	Reflex			u	~		y		_	execute as a dyad with ``x=RN``, equivalent to ``RN LMO RN``	full		u 	2
+	tilde#dyadic	adverb	Passive		x	u	~		y	ru	lu	swap the arguments of a dyad, equivalent to ``RN LMO LN``	full		x u 	4
+	tildem	adverb	Evoke			m	~					the value of the name ``LMO``; works for non-nouns, in contast to ``". LMO``	full		m 	2
+	tildedot	verb	Nub				~.		y		_	remove duplicates items, return only distinct items; order preserved	full			0
+	tildeco	verb	Nub Sieve				~:		y		_	boolean vector, ``1`` at positions of distinct items; ``~. RN`` is equivalent to ``(~: RN) # RN``	full			0
+	tildeco#dyadic	verb	Not-Equal		x		~:		y	0	0	compare corresponding atoms, ``0`` if equal, ``1`` if not; use Not Match ``-.@-:`` to compare two entire nouns	full		x 	2
+	bar	verb	Magnitude				|		B		0	absolute value; magnitude, if the argument is complex	full			0
+	bar#dyadic	verb	Residue		a		|		B	0	0	the remainder when dividing a given number ``RN`` by another given number ``LN``	full		a 	2
+	bardot	verb	Reverse				|.		y		_	rearrange the items in reverse order	full			0
+	bardot#dyadic	verb	Rotate		A		|.		y	_	_	rotates successive axes of ``RN`` by successive elements of ``LN`` (positive - to left, negative - to right)	full		A 	2
+	bardot#dyadicfit	verb	Shift		A		|.	!.f	y	_	_	like Rotate, but use fill atom ``f`` to replace shifted out items	full		A 	2
+	bardot#monadicfit	verb	Shift Right 1				|.	!.f	y		_	equivalent to ``_1 |.!.f RN``	full			0
+	barco	verb	Transpose				|:		y		_	reverse the axes (not the items!)	full			0
+	barco#dyadic	verb	Rearrange Axes		A		|:		y	1	_	the axes having indices ``LN`` become the new last axes	full		A 	2
+	barco#More_Information	verb	Extract Diagonal		(< A)		|:		y	1	_	extract a diagonal of the array	full		(< A) 	6
+	dot	conj	Determinant			u	.	v	B		2	``-/ . * RN`` is the determinant of the square matrix ``RN`` (space before ``.`` is required)	full		u 	2
+	dot#dyadic	conj	Matrix Product		A	u	.	v	B	_	_	``LN +/ . * RN`` is the inner product or matrix product; dot product of two vectors	full		A u 	4
+	cor	conj	Def			m	:	n				define entities of all types (verbs, adverbs, conjunctions, nouns); see Direct Definition	full		m 	2
+	NounExplicitDefinition	conj	Def			0	:	0				define a multiline noun (can be used as a multiline comment), a table	full		0 	2
+	cor	conj	Def			1	:	0				define a multiline adverb	full		1 	2
+	cor	conj	Def			2	:	0				define a multiline conjunction	full		2 	2
+	cor	conj	Def			3	:	0				define a multiline monadic or dual-valence verb	full		3 	2
+	cor	conj	Def			4	:	0				define a multiline dyadic verb	full		4 	2
+	cou	conj	Monad-Dyad			u	:	v				derive a dual-valence verb: verb ``LMO`` if called monadically, verb ``RMO`` if called dyadically	full		u 	2
+	codot	conj	Obverse			u	:.	v				new verb that behaves as ``LMO``, but its obverse is ``RMO``	full		u 	2
+	coco	conj	Adverse			u	::	v				run ``RMO`` if ``LMO`` fails (space after ``LMO`` is required)	full		u 	2
+	comma	verb	Ravel				,		y		_	flatten; a list of all atoms in ``RN``, in the display order of ``RN``	full			0
+	comma#dyadic	verb	Append		x		,		y	_	_	an array containing the items of ``LN`` followed by the items of ``RN``	full		x 	2
+	commadot	verb	Ravel Items				,.		y		_	a table where each row of the table comes from an item of ``RN`` (no-op for tables)	full			0
+	commadot#dyadic	verb	Stitch		x		,.		y	_	_	join each item of ``LN`` to the corresponding item of ``RN``; equivalent to ``LN ,"_1 RN``	full		x 	2
+	commaco	verb	Itemize				,:		y		_	an array of shape ``1, $RN`` with a single item ``RN``	full			0
+	commaco#dyadic	verb	Laminate		x		,:		y	_	_	a 2-item array with reshaped and itemized ``LN`` as the first and ``RN`` as the second item	full		x 	2
+	semi	verb	Raze				;		y		_	remove one level of boxing, concatenate the contents of the boxes into one long array	full			0
+	semi#dyadic	verb	Link		x		;		y	_	_	build up a list of boxed items (don't box ``RN`` if it's already boxed); heterogeneous arrays	full		x 	2
+	semidot0	adverb	Reversed			u	;.	0	y		_	reverse ``RN`` along all its axes, apply ``LMO``	full		u 	2
+	semidot0#dyadic	adverb	Subarray		x	u	;.	0	y	2	_	extract subarray of ``RN``, described by ``LN``, apply ``LMO`` (``];.0`` extracts w/o overtaking, unlike ``{.``); substring	full		x u 	4
+	semidot1	adverb	SelfIntervals			u	;.	1	y		_	split ``RN``, include frets (= first item, start of an interval), apply ``LMO`` on each interval	full		u 	2
+	semidot1	adverb	SelfIntervals			u	;.	_1	y		_	split ``RN``, remove frets (= first item, start of an interval), apply ``LMO`` on each interval	full		u 	2
+	semidot1	adverb	SelfIntervals			u	;.	2	y		_	split ``RN``, include frets (= last item, end of an interval), apply ``LMO`` on each interval	full		u 	2
+	semidot1	adverb	SelfIntervals			u	;.	_2	y		_	split ``RN``, remove frets (= last item, end of an interval), apply ``LMO`` on each interval	full		u 	2
+	semidot1#dyadic	adverb	Intervals		G	u	;.	1	y	1	_	split ``RN``, include frets (where ``LN=1``, start of an interval), apply ``LMO`` on each interval	full		G u 	4
+	semidot1#dyadic	adverb	Intervals		G	u	;.	_1	y	1	_	split ``RN``, remove frets (where ``LN=1``, start of an interval), apply ``LMO`` on each interval	full		G u 	4
+	semidot1#dyadic	adverb	Intervals		G	u	;.	2	y	1	_	split ``RN``, include frets (where ``LN=1``, end of an interval), apply ``LMO`` on each interval	full		G u 	4
+	semidot1#dyadic	adverb	Intervals		G	u	;.	_2	y	1	_	split ``RN``, remove frets (where ``LN=1``, end of an interval), apply ``LMO`` on each interval	full		G u 	4
+	semidot3#dyadic	adverb	Subarrays		x	u	;.	_3	y	2	_	apply ``LMO`` to each tile of a regular tiling of ``RN`` specified by ``LN``	full		x u 	4
+	semidot3#dyadic	adverb	Subarrays		x	u	;.	3	y	2	_	like ``LMO;._3``, except that the results from uncompleted tiles are not discarded	full		x u 	4
+	semidot3	adverb	Max Cubes			u	;.	_3	y		_	special case of ``;._3``, where ``x`` holds the same size for all dimensions, given by ``(#$RN) $ <./ $RN``	full		u 	2
+	semidot3	adverb	Max Cubes			u	;.	3	y		_	special case of ``;.3``, where ``x`` holds the same size for all dimensions, given by ``(#$RN) $ <./ $RN``	full		u 	2
+	semico	verb	Words				;:		y		1	partition a string into boxed words according to J's rules for word formation; tokenize; split	full			0
+	semico#dyadic	verb	Sequential Machine		x		;:		y	_	_	partition a string ``RN`` according to the rules of a given finite-state machine defined by ``LN``	full		x 	2
+	number	verb	Tally				#		y		_	count the items	full			0
+	number#dyadic	verb	Copy		A		#		y	1	_	``LN`` controls how many times a corresponding item of ``RN`` appears in a new array	full		A 	2
+	numberdot	verb	Base Two				#.		G		1	convert a binary list to an integer ``5 -: #. 1 0 1``	full			0
+	numberdot#dyadic	verb	Base		A		#.		B	1	1	generalized ``#.RN`` to bases other than 2 (including mixed bases); weighted sum	full		A 	2
+	numberco	verb	Antibase Two				#:		B		_	binary expansion of ``RN`` as a Boolean list (two's complement form for negative numbers)	full			0
+	numberco#dyadic	verb	Antibase		A		#:		B	1	0	generalized ``#:RN`` to bases other than 2 (including mixed bases); modulo; quotient/remainder; whole/fractional	full		A 	2
+	Inverses#ConvertToBaseX	verb	Base Inverse		a		#.	^:_1	B	_	_	convert ``RN`` to fixed base ``LN`` (finds out length of the result automatically, unlike ``#:``)	full		a 	2
+	bang	verb	Factorial				!		B		0	factorial; generally, compute the [Gamma function](https://en.wikipedia.org/wiki/Gamma_function) of ``1+RN``	full			0
+	bang#dyadic	verb	Out Of		A		!		B	0	0	``RN``-Combinations-``LN``; number of ways to choose ``LN`` items from ``RN``; binomial coefficients; [Pascal's triangle](https://en.wikipedia.org/wiki/Pascal%27s_triangle)	full		A 	2
+	bangdot	conj	Fit (Customize)			u	!.	n		lu	ru	variants of primitive verb: adjust comparison tolerance, fill atom, print precision, compensated sum, etc	full		u 	2
+	bangco	conj	Foreign			m	!:	n		0	0	[system functions](https://code.jsoftware.com/wiki/Vocabulary/Foreigns)	full		m 	2
+	slash	adverb	Insert			u	/		y		_	inserts (dyad) ``LMO`` between the items of ``RN``; reduce	full		u 	2
+	slash#dyadic	adverb	Table		x	u	/		y	_	_	a table (if ``0 = #$LMO``) having entries ``a LMO b`` for every ``a`` in ``LN`` and ``b`` in ``RN``; equivalent to ``LN LMO"(lu,_) RN``	full		x u 	4
+	slashdot	adverb	Oblique			u	/.		y		_	apply ``LMO`` to the oblique diagonals of table ``RN``	full		u 	2
+	slashdot#dyadic	adverb	Key		x	u	/.		y	_	_	apply ``LMO`` to each partition of ``RN``, based on keys from ``LN``; group by	full		x u 	4
+	slashco	verb	Grade Up				/:		y		_	permutation that sorts the items of ``RN`` into ascending order (stable sort)	full			0
+	slashco#dyadic	verb	Sort Up [Using]		x		/:		y	_	_	apply to list ``LN`` the permutation that sorts list ``RN`` into ascending order; equivalent to ``(/: RN) { LN``; sort ``/:~RN``	full		x 	2
+	bslash	adverb	Prefix			u	\		y		_	apply ``LMO`` to successive prefixes of ``RN`` of increasing length (the main use is in ``LMO/\``, e.g. cumulative sum)	full		u 	2
+	bslash#dyadic	adverb	Infix		a	u	\		y	0	_	apply ``LMO`` to successive (overlapping if ``LN > 0``) parts of ``RN``; sliding window	full		a u 	4
+	bslashdot	adverb	Suffix			u	\.		y		_	apply ``LMO`` to successive suffixes of ``RN`` of decreasing length (the main use is in ``LMO/\.``, calculated in reverse order)	full		u 	2
+	bslashdot#dyadic	adverb	Outfix		x	u	\.		y	_	_	apply ``LMO`` to ``RN`` with successive (overlapping if ``LN > 0``) parts removed	full		x u 	4
+	slashco	verb	Grade Down				\:		y		_	permutation that sorts the items of ``RN`` into descending order (stable sort)	full			0
+	slashco#dyadic	verb	Sort Down [Using]		x		\:		y	_	_	apply to list ``LN`` the permutation that sorts list ``RN`` into descending order; equivalent to ``(\: RN) { LN``; sort ``\:~RN``	full		x 	2
+	squarelf	verb	Same				[		y		_	return ``RN`` unchanged; equivalent to ``RN`` and to ``] RN``	full			0
+	squarelf#dyadic	verb	Left		x		[		y	_	_	return ``LN``; separate assignments on the same line; useful in tacit verbs to get the value of ``LN``	full		x 	2
+	squarelfco	verb	Cap	1	x		[:		y	_	_	in tacit phrase ``[: f g`` equivalent to ``g@:h``; domain error as monad or dyad	full		[x] 	4
+	squarert	verb	Same				]		y		_	return ``RN`` unchanged; equivalent to ``RN`` and to ``[ RN``; useful to display assignment as in ``] z =: i:2``	full			0
+	squarert#dyadic	verb	Right		x		]		y	_	_	return ``RN``; useful to separate two numeric atoms to prevent J treating them as a single list ``i."0 ] 3 4 5``	full		x 	2
+	curlylf	verb	Catalogue				{		y		1	combine items from the atoms inside a boxed list to form a catalogue; [Cartesian product](https://en.wikipedia.org/wiki/Cartesian_product)	full			0
+	curlylf#dyadic	verb	From		A		{		y	0	_	select the item with index ``LN`` from ``RN``; index along multiple axes, select subarrays, etc with boxed ``LN``	full		A 	2
+	curlylfdot	verb	Head				{.		y		_	the first item of ``RN``; convert a single-item list into an atom	full			0
+	curlylfdot#dyadic	verb	Take		A		{.		y	1	_	the first (last if ``LN`` is negative) ``LN`` items of ``RN``; if ``LN > #RN``, the result will have ``LN`` items (fill atoms added)	full		A 	2
+	curlylfco	verb	Tail				{:		y		_	the last item of ``RN``	full			0
+	curlylfcoco	verb	Map				{::		y		_	a map of a boxed noun ``RN`` (same box structure, but leafs replaced with paths); not the Lisp ``map``!	full			0
+	curlylfcoco#dyadic	verb	Fetch		x		{::		y	1	_	a list of the contents of selected boxes in a boxed noun ``RN``; select from a deep structure (a tree)	full		x 	2
+	curlyrt	adverb	Composite Item			m	}		y		_	``LMO`` (of the same shape as an item of ``RN``) selects atoms from the corresponding positions of the items of a list ``RN``	full		m 	2
+	curlyrt#dyadic	adverb	Amend		x	m	}		y	_	_	a copy of ``RN`` with the locations ``LMO`` replaced by new values ``LN``; modify positions	full		x m 	4
+	curlyrtdot	verb	Behead				}.		y		_	drop the first item	full			0
+	curlyrtdot#dyadic	verb	Drop		x		}.		y	1	_	drop the first (the last, if ``LN`` is negative) ``LN`` items	full		x 	2
+	curlyrtco	verb	Curtail				}:		y		0	drop the last item; equivalent to ``_1 }. RN``	full			0
+	DirectDefinition	control	DirectDefinition				{{ }}					shorthand for writing [multiline] [nested] explicit definitions (verbs, adverbs, conjunctions, nouns)	full			0
+	quote	conj	Assign Rank			u	"	n				apply ``LMO`` to each ``RMO``-cell (corresponding ``RMO``-cells, if dyadic); the most-used modifier in J (like a [nested] loop)	full		u 	2
+	quotem	conj	Constant Verb			m	"	n				a verb with rank ``RMO``, that produces ``LMO`` for each ``RMO``-cell of its argument(s)	full		m 	2
+	quotev	conj	Copy Rank			u	"	v				``LMO"RMO`` and ``m"RMO`` are equivalent to ``LMO"n`` and ``m"n`` respectively, where ``n`` is the list of ranks of ``RMO``	full		u 	2
+	quotedot	verb	Do				".		S		1	execute the sentence ``RN``, return the result; string to number (not safe, use the dyad)	full			0
+	quotedot#dyadic	verb	Numbers		a		".		S	_	_	convert a byte array ``RN`` (a string) into numbers with ill-formed numbers replaced by ``LN``	full		a 	2
+	quoteco	verb	Default Format				":		y		_	convert ``RN`` to a byte array (a string)	full			0
+	quoteco#dyadic	verb	Format		x		":		y	1	_	convert ``RN`` (numeric or boxed) to a byte array (a string) formatted according to the specification ``LN``	full		x 	2
+	grave	conj	Tie (Gerund)			u	`	v				combine verbs into a single noun to be used as an operand to a modifier (commonly used with ``/`` and ``@.``)	full		u 	2
+	graveco	conj	Evoke Gerund			m	`:	n		_	_	turn a gerund into verb; ``RMO=0``, apply each verb separately; ``RMO=3``, equivalent to ``LMO/``; ``RMO=6``, verb train	full		m 	2
+	at	conj	Atop	1	x	u	@	v	y	lv	rv	composition: apply ``LMO`` monad on the result of each application of ``RMO`` to each cell of the argument(s)	full		[x] u 	6
+	atdot	conj	Agenda			m	@.	n				a verb defined by the ``RMO``-th atom from gerund ``LMO``; a train of verbs, if ``RMO`` is a list; boxes indicate parentheses	full		m 	2
+	atdot	conj	Agenda	1	x	m	@.	v	y	lv	rv	result of ``[LN] RMO RN`` used to select a verb ``w`` from ``LMO``, then ``[LN] w RN``; e.g. if-statement per cell	full		[x] m 	6
+	atco	conj	At	1	x	u	@:	v	y	_	_	equivalent to ``LMO [LN] RMO RN``; ``LMO`` is executed on the entire result of ``RMO``	full		[x] u 	6
+	ampm	conj	Bond			m	&	v			_	make a monad out of a dyad ``RMO`` by supplying the noun value ``LMO`` as the left argument of ``RMO``	full		m 	2
+	ampm	conj	Bond			u	&	n			_	make a monad out of a dyad ``LMO`` by supplying the noun value ``RMO`` as the right argument of ``LMO``	full		u 	2
+	ampm#dyadic	conj	Bond		x	m	&	v	y	0	_	apply ``LMO&RMO`` to ``RN`` repeatedly ``LN`` times; equivalent to  ``LN (LMO&RMO @ ] ^: [) RN``	full		x m 	4
+	ampm#dyadic	conj	Bond		x	u	&	n	y	0	_	apply ``LMO&RMO`` to ``RN`` repeatedly ``LN`` times; equivalent to  ``LN (LMO&RMO @ ] ^: [) RN``	full		x u 	4
+	ampv	conj	Compose	1	x	u	&	v	y	mv	mv	apply ``RMO`` to each cell of each argument, then apply ``LMO`` to the results for each cell separately	full		[x] u 	6
+	ampdot	conj	Under (Dual)	1	x	u	&.	v	y	mv	mv	on each cell apply ``RMO``, ``LMO``, the obverse of ``RMO``; e.g. ``LMO&.>`` to apply ``LMO`` inside each box	full		[x] u 	6
+	ampdot	conj	Semidual		x	u	&.	(a:`v)	y	mv	mv	same as ``LMO&.RMO``, but apply ``RMO`` only to ``RN``	full		x u 	4
+	ampdot	conj	Semidual		x	u	&.	(v`a:)	y	mv	mv	same as ``LMO&.RMO``, but apply ``RMO`` only to ``LN``	full		x u 	4
+	ampco	conj	Appose	1	x	u	&:	v	y	_	_	apply ``RMO`` monad to each argument in its entirety, apply ``LMO`` to the results	full		[x] u 	6
+	ampdotco	conj	Under	1	x	u	&.:	v	y	_	_	apply ``RMO``, ``LMO``, the obvserse of ``RMO``; supports Semiduals; equivalent to ``RMO^:_1 [(RMO LN)] LMO (RMO RN)``	full		[x] u 	6
+	query	verb	Roll				?		B		0	a random number uniformly distributed in a range determined by ``RN``; ``RN=0`` for floats in (0, 1); ``RN>1`` for integers	full			0
+	query#dyadic	verb	Deal		A		?		B	0	0	select ``LN`` items at random (without repetition) from the list ``i.RN``; be careful if using it with explicit-to-tacit translator	full		A 	2
+	querydot	verb	Roll / fixed seed				?.		y		_	like Roll, but the random-number generator is reset each time ``?.`` is executed; useful for reproducible samples	full			0
+	querydot	verb	Deal / fixed seed		x		?.		y	0	0	like Deal, but the random-number generator is reset each time ``?.`` is executed; useful for reproducible samples	full		x 	2
+	adot	noun	Alphabet				a.					a built-in list of all bytes; ASCII characters	full			0
+	aco	noun	Ace (Boxed Empty)				a:					an atom consisting of the boxed empty list ``<0$0``	full			0
+	acapdot	verb	Anagram Index				A.		B		1	convert the permutation ``RN`` into its permutation number (anagram index)	full			0
+	acapdot#dyadic	verb	Anagram		a		A.		y	0	_	reorder items of ``RN`` by applying the permutation of length ``#RN`` with anagram index ``LN``	full		a 	2
+	bdot	adverb	Boolean	1	x	m	b.		y	_	_	a verb to perform logic on the bit(s) of ``RN`` (and ``LN``, if present); ``LMO`` selects the logic to apply	full		[x] m 	6
+	bdot	adverb	Boolean	1	x	m	b.		y	_	_	``LMO`` ``0`` to ``15`` (same for ``_16`` to ``_1``): logical function, truth table encoded by ``LMO``, e.g. ``1`` for AND, ``6`` for XOR, ``7`` for OR	full		[x] m 	6
+	bdot	adverb	Bitwise	1	x	m	b.		y	_	_	``LMO`` ``16`` to ``31``: bitwise logical function, truth table encoded by ``LMO``, e.g. ``17`` for AND, ``22`` for XOR, ``23`` for OR	full		[x] m 	6
+	bdot	adverb	Bitwise Rotate	1	x	32	b.		y	_	_	left-rotate bits of ``RN`` by ``LN`` positions; use negative ``LN`` to right-rotate	full		[x] 32 	7
+	bdot	adverb	Unsigned Bitwise Shift	1	x	33	b.		y	_	_	unsigned left-shift bits of ``RN`` by ``LN`` positions; use negative ``LN`` to right-shift	full		[x] 33 	7
+	bdot	adverb	Signed Bitwise Shift	1	x	34	b.		y	_	_	signed left-shift bits of ``RN`` by ``LN`` positions; use negative ``LN`` to right-shift	full		[x] 34 	7
+	bdotu	adverb	Verb Information			u	b.		_1			linear representation of the obvserse of ``LMO``	full		u 	2
+	bdotu	adverb	Verb Information			u	b.		0			ranks of ``LMO``	full		u 	2
+	bdotu	adverb	Verb Information			u	b.		_1			linear representation of the identity function of ``LMO``	full		u 	2
+	ccapdot	verb	Cycle-Direct				C.		B		1	convert the permutation ``RN`` between direct and cycle representations	full			0
+	ccapdot#permparity	verb	Permutation Parity				C.	!.2	y		1	the [Levi-Civita symbol](https://en.wikipedia.org/wiki/Levi-Civita_symbol) (ε) of ``RN``	full			0
+	ccapdot#dyadic	verb	Permute		x		C.		y	1	_	apply the permutation ``LN`` to the items of ``LN``	full		x 	2
+	edot	verb	Raze In				e.		y		_	a Boolean table comparing each box of ``RN`` (a list of boxed items) against each atom in ``;RN`` (the Raze of ``RN``)	full			0
+	edot#dyadic	verb	Member (In)		x		e.		y	_	_	return ``1`` if item ``RN`` is in array ``RN``, otherwise ``0``; contains/includes	full		x 	2
+	ecapdot#dyadic	verb	Find Matches		x		E.		y	_	_	a Boolean array (shape of ``RN``) indicating starting points in ``RN`` of subarrays equal to ``LN``; matching substrings	full		x 	2
+	fdot	adverb	Fix			u	f.				_	replace each name in ``LMO`` with a fixed value without name dependencies; doesn't work with explicit definitions	full		u 	2
+	fcap	conj	Fold Multiple Forward	1	x	u	F:.	v	y			process ``RN`` left-to-right with ``RMO`` (a recurrence relation), apply ``LMO`` on each item, return all; ``LN`` is initial arg to ``RMO``	full		[x] u 	6
+	fcap	conj	Fold Multiple Reverse	1	x	u	F::	v	y			process ``RN`` right-to-left with ``RMO`` (a recurrence relation), apply ``LMO`` on each item, return all; ``LN`` is initial arg to ``RMO``	full		[x] u 	6
+	fcap	conj	Fold Multiple	1	x	u	F:	v	y			``RMO`` (a recurrence relation) builds a sequence, apply ``LMO`` on each item, halt with ``Z:``, return all; ``LN`` is arg to ``RMO``	full		[x] u 	6
+	fcap	conj	Fold Single Forward	1	x	u	F..	v	y			process ``RN`` left-to-right with ``RMO`` (a recurrence relation), apply ``LMO`` on each item, return last; ``LN`` is initial arg to ``RMO``	full		[x] u 	6
+	fcap	conj	Fold Single Reverse	1	x	u	F.:	v	y			process ``RN`` right-to-left with ``RMO`` (a recurrence relation), apply ``LMO`` on each item, return last; ``LN`` is initial arg to ``RMO``	full		[x] u 	6
+	fcap	conj	Fold Single	1	x	u	F.	v	y			``RMO`` (a recurrence relation) builds a sequence, apply ``LMO`` on each item, halt with ``Z:``, return last; ``LN`` is arg to ``RMO``	full		[x] u 	6
+	hcapdot	conj	Hypergeometric	1	x	m	H.	n	y	0	0	sum ``LN`` terms of a generalized hypergeometric series; ``LMO`` and ``RMO`` describe the series	full		[x] m 	6
+	idot	verb	Integers				i.		y		1	an ascending sequence of integers; shape is ``|RN``; a negative atom in ``RN`` reverses along corresponding dimension	full			0
+	idot#dyadic	verb	Index Of		x		i.		y	_	_	find the first occurence of ``RN`` in ``LN``; return ``#LN``, if not found; for sorted lists of integers ``i.!.1`` is faster	full		x 	2
+	ico	verb	Steps				i:		B		0	a sequence of integers from ``-RN`` to ``+RN``; ``b`` in a complex number ``(a j. b)`` gives the number of steps between	full			0
+	ico#dyadic	verb	Index Of Last		x		i:		y	_	_	find the last occurence of ``RN`` in ``LN``; return ``#LN``, if not found (same as for ``i.``)	full		x 	2
+	icapdot	verb	Indices				I.		H		1	indexes of all ``1``'s in ``RN``; equivalent to ``RN # i. # RN``; if an atom of ``RN`` is greater than ``1``, the index is repeated	full			0
+	icapdot#dyadic	verb	Interval Index		A		I.		y	_	_	binary search; ``LN`` should be sorted (either in ascending or descending order)	full		A 	2
+	jdot	verb	Imaginary				j.		y		0	multiply ``RN`` by ``0j1``, which represents the imaginary unit i; equivalent to ``0j1 * RN``	full			0
+	jdot#dyadic	verb	Complex		x		j.		y	0	0	combine ``LN`` and ``RN`` into a complex number; equivalent to ``LN + 0j1 * RN``	full		x 	2
+	lcapdot	verb	Level Of				L.		y		_	the greatest level of nesting of a boxed noun, or ``0`` if unboxed	full			0
+	lcapco#dyadic	conj	Level At	1	x	u	L:	n	y	_	_	the same box structure but contents of each box on level ``RMO`` (``0`` for leaves) modified by ``LMO``	full		[x] u 	6
+	mcapdot	adverb	Memo	1	x	u	M.		y	lu	ru	memoization; records only atomic arguments; user can't control the size of the table	full		[x] u 	6
+	ncapbcapdot	noun	Comment				NB.					everything from ``NB.`` to the end-of-line (``LF``) will be ignored by the interpreter	full			0
+	odot	verb	Pi Times				o.		y		0	π times ``RN`` given any number ``RN``; ``1p1 = o. 1``	full			0
+	odot#dyadic	verb	Circle Function		x		o.		y	0	0	trigonometric and hyperbolic functions, their inverses; [The Story of ○](https://www.jsoftware.com/papers/eem/storyofo.htm)	full		x 	2
+	pdot	verb	Roots				p.		y		1	convert the polynomial ``RN`` between coefficient and multiplier-and-roots form	full			0
+	pdot#dyadic	verb	Polynomial		x		p.		y	1	0	evaluate polynomial ``LN`` for given value(s) of ``RN``	full		x 	2
+	pdotdot	verb	Polynomial Derivative				p..		y		1	the first derivative of a given polynomial ``RN``	full			0
+	pdotdot#dyadic	verb	Polynomial Integral		x		p..		y	0	1	the integral of a given polynomial ``RN``; ``LN`` is the constant of integration that will be added to the result	full		x 	2
+	pco	verb	Primes				p:		y		0	the ``RN``-th prime (starting with ``2`` as the ``0``-th prime); the inverse ``p:^:_1 RN`` tells the number of primes less than ``RN``	full			0
+	pco#dyadic	verb	Primes		x		p:		y	_	_	a collection of prime-related functions of integer ``RN``, with ``LN`` selecting the function	full		x 	2
+	pco#dyadic	verb	Primes		_4		p:		y	_	_	the largest prime smaller than ``RN``	full		_4 	3
+	pco#dyadic	verb	Primes		_1		p:		y	_	_	π(``RN``), the number of primes less than ``RN`` (same as ``p:^:_1``)	full		_1 	3
+	pco#dyadic	verb	Primes		0		p:		y	_	_	``1`` if ``RN`` is not prime	full		0 	2
+	pco#dyadic	verb	Primes		1		p:		y	_	_	``1`` if ``RN`` is prime	full		1 	2
+	pco#dyadic	verb	Primes		2		p:		y	_	_	a 2-row table of the prime factors and exponents in the factorization of ``RN`` (same as ``__ q: RN``)	full		2 	2
+	pco#dyadic	verb	Primes		3		p:		y	_	_	the list of primes whose product is equal to ``RN`` (same as ``q: RN``)	full		3 	2
+	pco#dyadic	verb	Primes		4		p:		y	_	_	the smallest prime larger than ``RN``	full		4 	2
+	pco#dyadic	verb	Primes		5		p:		y	_	_	the number of integers less than or equal to ``RN`` that are relatively prime to ``RN`` (Euler's totient function φ(y))	full		5 	2
+	qco	verb	Prime Factors				q:		y		0	the prime factorization of integer ``RN``, listed in ascending order; same as ``3 p: RN``	full			0
+	qco#dyadic	verb	Prime Exponents		x		q:		y	0	0	primes and exponentes in the factorization of ``RN``; ``LN>0``, the leading exponents; ``LN<0``, table, trailing, zeros excluded	full		x 	2
+	rdot	verb	Angle				r.		y		0	angle ``RN`` (in radians), expressed as a unit vector in the complex plane	full			0
+	rdot#dyadic	verb	Polar		x		r.		y	0	0	like monadic ``(r.)``, but with a scaling factor ``LN``; equivalent to ``LN * (r. RN)``	full		x 	2
+	sco	verb	Symbol				s:		y		_	intern a boxed string; some operations on symbols are faster, than on boxed strings (search, comparison)	full			0
+	sco#dyadic	verb	Symbol		x		s:		y	_	_	verbs for working with symbol sets: table of symbols, store/restore the global symbols data, etc	full		x 	2
+	scapco	conj	Spread	1	x	u	S:	n	y	_	_	apply ``LMO`` to contents of each box on level ``RMO`` (``0`` for leaves), collect results into an array (compare with ``L:``)	full		[x] u 	6
+	uco	verb	Unicode				u:		y		_	convert an integer ``RN`` to the unicode character having ``RN`` as its code point; convert a character to unicode precision	full			0
+	uco#dyadic	verb	Unicode		x		u:		y	_	_	convert between numbers, character precisions and encodings according to the Unicode and UTF-8 standards	full		x 	2
+	xco	verb	Extended Precision				x:		y		_	convert a number ``RN`` to extended precision, either extended integer or rational	full			0
+	xco#dyadic	verb	Num/Denom		x		x:		y	_	_	convert a number ``RN`` of any precision to a precision chosen by ``LN``	full		x 	2
+	zcapco	verb	Terminate Fold		x		Z:		y	_	_	terminate Fold, in whole or part	full		x 	2
+	zeroco	verb	Constant Function	1	x		0:		y	_	_	the value ``0``, whatever the arguments happen to be; has sister-primitives ``_:``, ``1:``, ..., ``9:`` and ``_1:``, ..., ``_9:``	full		[x] 	4
+	udot	verb	Enhanced Operand				u.				_	find the value of ``u`` in current namespace, switch to a previous namespace, execute the value there	full			0
+	udot	verb	Enhanced Operand				v.				_	find the value of ``v`` in current namespace, switch to a previous namespace, execute the value there				0
+																7

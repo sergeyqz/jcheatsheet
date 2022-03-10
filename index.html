@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+
+        <title>J Language Cheatsheet</title>
+
+        <script type="module">
+         document.documentElement.classList.remove('no-js');
+         document.documentElement.classList.add('js');
+        </script>
+
+        <meta name="description" content="J Language Cheatsheet largely based on NuVoc. A list of J primitives with short descriptions, links to NuVoc and some examples.">
+
+        <link rel="canonical" href="https://sergeyqz.github.io/jcheatsheet">
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <!-- <link rel="icon" href="/favicon.ico"> -->
+        <!-- <link rel="icon" href="/favicon.svg" type="image/svg+xml"> -->
+        <!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
+
+        <style>
+         @font-face {
+	     font-family: 'Iosevka Fixed Web';
+	     font-display: swap;
+	     font-weight: 500;
+	     font-stretch: normal;
+	     font-style: normal;
+	     src: url('woff2/iosevka-fixed-medium.woff2') format('woff2'), url('ttf/iosevka-fixed-medium.ttf') format('truetype');
+         }
+
+         /* ::selection {
+            background-color: cyan;
+            }
+          */
+         body {
+             font-family: sans-serif;
+         }
+         tr.verb > td.code {
+             background: #ddccff;
+         }
+         tr.adverb > td.code {
+             background: #cceeff;
+         }
+         tr.conj > td.code {
+             background: #eeffcc;
+         }
+         tr.noun > td.code {
+             background: #ffccee;
+         }
+         tr.copula > td.code {
+             background: #dddddd;
+         }
+         tr.control > td.code {
+             background: #eeaaaa;
+         }
+         tr:hover {
+             outline: 1px solid #999999;
+         }
+         code, .code {
+             font-family: 'Iosevka Fixed Web', monospace;
+	     font-weight: 500;
+         }
+         code {
+             font-size: 1.1rem;
+             background: #f0f0f0;
+             outline: #e6e6e6 solid 1px;
+             border-radius: 2px;
+             padding: 0 3px;
+         }
+         .code {
+             font-size: 1.2rem;
+         }
+         td {
+             white-space: nowrap;
+         }
+         td.code {
+             padding: 1px 1rem;
+         }
+         td.name {
+             padding: 0 .5rem;
+             text-align: right;
+         }
+         td.desc {
+             padding: 0 .5rem;
+         }
+         .rank {
+             /* font-size: .8rem; */
+             color: #00000033;
+         }
+         table {
+             border-collapse: collapse;
+         }
+         a {
+             text-decoration: none;
+         }
+         a:hover {
+             text-decoration: underline;
+         }
+        </style>
+    </head>
+
+    <body>
+        <h1>J Language Cheatsheet</h1>
+
+        <p>The table is largely based on <a href="https://code.jsoftware.com/wiki/NuVoc">NuVoc</a> (accessed around April 2021). It contains all J primitives with short descriptions, links to NuVoc and some examples. The order and the background colors are the same as in NuVoc table. The source of the table is on <a href="https://github.com/sergeyqz/jcheatsheet">GitHub</a>.</p>
+
+        <p>Types: </p>
+
+        <ul>
+            <li> <code>x</code>, <code>y</code>: any noun </li>
+            <li> <code>a</code>, <code>b</code>: numeric scalar </li>
+            <li> <code>A</code>, <code>B</code>: numeric array </li>
+            <li> <code>C</code>, <code>D</code>: complex numeric array </li>
+            <li> <code>g</code>, <code>h</code>: boolean scalar </li>
+            <li> <code>G</code>, <code>H</code>: boolean array </li>
+            <li> <code>R</code>, <code>S</code>: character array </li>
+            <li> <code>u</code>, <code>v</code>: verb operands of modifiers </li>
+            <li> <code>m</code>, <code>n</code>: noun operands of modifiers </li>
+        </ul>
+        <table>
+          
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/eq">Self-Classify</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= y <span class="rank">_</span> </td>
+    <td class="desc">compare unique items against all items; consider using <code>i.~ y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/eq#dyadic">Equal</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;x = y <span class="rank">0</span> </td>
+    <td class="desc">compare corresponding atoms, <code>1</code> if equal, <code>0</code> if not; to compare two entire nouns for equality, use Match <code>-:</code></td>
+</tr>
+
+<tr class="copula">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/eqdot">Is (Local)</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=. <span class="rank"></span> </td>
+    <td class="desc">private assignment, supports unpacking</td>
+</tr>
+
+<tr class="copula">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/eqco">Is (Global)</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=: <span class="rank"></span> </td>
+    <td class="desc">public assignment, supports unpacking</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/lt">Box</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt; y <span class="rank">_</span> </td>
+    <td class="desc">convert to boxed form, useful for heterogeneous arrays</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/lt#dyadic">Less Than</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A &lt; B <span class="rank">0</span> </td>
+    <td class="desc">compare corresponding atoms, wherever <code>A</code> is less than <code>B</code>, return <code>1</code>, else <code>0</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ltdot">Floor</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;. B <span class="rank">0</span> </td>
+    <td class="desc">largest integer less than or equal to <code>B</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ltdot#ComplexFloor">Complex Floor</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;. D <span class="rank">0</span> </td>
+    <td class="desc">see docs for the description</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ltdot#dyadic">Lesser Of (Min)</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A &lt;. B <span class="rank">0</span> </td>
+    <td class="desc">the lesser atoms of arguments</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ltco">Decrement</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;: B <span class="rank">0</span> </td>
+    <td class="desc">equivalent to <code>B - 1</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ltco#dyadic">Less Or Equal</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A &lt;: B <span class="rank">0</span> </td>
+    <td class="desc">compare corresponding atoms, wherever <code>A</code> is less than, or equal to, <code>B</code>, return <code>1</code>, else <code>0</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/gt">Open</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt; y <span class="rank">0</span> </td>
+    <td class="desc">open boxed elements</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/gt#dyadic">Larger Than</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A &gt; B <span class="rank">0</span> </td>
+    <td class="desc">compare corresponding atoms, wherever <code>A</code> is greater than <code>B</code>, return <code>1</code>, else <code>0</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/gtdot">Ceiling</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;. B <span class="rank">0</span> </td>
+    <td class="desc">smallest integer greater than or equal to <code>B</code>, equivalent to <code>- &lt;. - B</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/gtdot#ComplexCeiling">Complex Ceiling</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;. D <span class="rank">0</span> </td>
+    <td class="desc">see Complex Floor docs for the description</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/gtdot#dyadic">Larger Of (Max)</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A &gt;. B <span class="rank">0</span> </td>
+    <td class="desc">the larger atoms of arguments</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/gtco">Increment</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gt;: B <span class="rank">0</span> </td>
+    <td class="desc">equivalent to <code>B + 1</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/gtco#dyadic">Larger Or Equal</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A &gt;: B <span class="rank">0</span> </td>
+    <td class="desc">compare corresponding atoms, wherever <code>A</code> is greater than, or equal to, <code>B</code>, return <code>1</code>, else <code>0</code></td>
+</tr>
+
+<tr class="noun">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/under">Negative Sign</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_ <span class="rank"></span> </td>
+    <td class="desc">as the first character of a numeric constant, acts as a negative sign</td>
+</tr>
+
+<tr class="noun">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/under">Infinity</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_ <span class="rank"></span> </td>
+    <td class="desc">standing by itself, represents the value Infinity (an IEEE floating-point value)</td>
+</tr>
+
+<tr class="noun">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/underdot">Indeterminate</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_. <span class="rank"></span> </td>
+    <td class="desc">a placeholder broadly comparable with NaN (not a number)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/underco">Infinite</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;[x] _: y <span class="rank">_</span> </td>
+    <td class="desc">Infinity (<code>_</code>), whatever the arguments happen to be</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/plus">Conjugate</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ B <span class="rank">0</span> </td>
+    <td class="desc">complex conjugate of the number</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/plus#dyadic">Plus</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A + B <span class="rank">0</span> </td>
+    <td class="desc">add two numeric nouns</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/plusdot">Real / Imag</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+. B <span class="rank">0</span> </td>
+    <td class="desc">decompose complex number into real and imaginary parts</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/plusdot#dyadic">GCD (Or)</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A +. B <span class="rank">0</span> </td>
+    <td class="desc">logical OR (disjunction) between Booleans, no short-circuit; Greatest Common Divisor</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/plusco">Double</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+: B <span class="rank">0</span> </td>
+    <td class="desc">equivalent to <code>2 * B</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/plusco#dyadic">Not-Or</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;G +: H <span class="rank">0</span> </td>
+    <td class="desc">logical NOR (Peirce's arrow), equivalent to <code>-. G +. H</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/star">Signum</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* B <span class="rank">0</span> </td>
+    <td class="desc">sign of the number; a point on the unit circle for complex numbers <code>B % | B</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/star#dyadic">Times</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A * B <span class="rank">0</span> </td>
+    <td class="desc">product of two numeric nouns</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/stardot">Length / Angle</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*. B <span class="rank">0</span> </td>
+    <td class="desc">convert a complex number to polar coordinates</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/stardot#dyadic">LCM (And)</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A *. B <span class="rank">0</span> </td>
+    <td class="desc">logical AND; Least Common Multiple in general</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/starco">Square</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*: B <span class="rank">0</span> </td>
+    <td class="desc">square of numeric noun</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/starco#dyadic">Not-And</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;G *: H <span class="rank">0</span> </td>
+    <td class="desc">logical NAND, equivalent to <code>-. G *. H</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/minus">Negate</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- B <span class="rank">0</span> </td>
+    <td class="desc">negate; don't confuse it with Negative Sign (<code>_</code>)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/minus#dyadic">Minus</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A - B <span class="rank">0</span> </td>
+    <td class="desc">subtract <code>B</code> from <code>A</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/minusdot">Not</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-. B <span class="rank">0</span> </td>
+    <td class="desc">equivalent to <code>1 - B</code>; logical NOT for Booleans, complementary probability for interval [0, 1]</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/minusdot#dyadic">Less</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x -. y <span class="rank">_</span> </td>
+    <td class="desc">set difference; all atoms of <code>x</code> that are not in <code>y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/minusco">Halve</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-: B <span class="rank">0</span> </td>
+    <td class="desc">equivalent to <code>B % 2</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/minusco#dyadic">Match</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x -: y <span class="rank">_</span> </td>
+    <td class="desc"><code>1</code> if entire nouns are the same in shape and elements (but not necessarily type), <code>0</code> otherwise</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/percent">Reciprocal</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;% B <span class="rank">0</span> </td>
+    <td class="desc">equivalent to <code>1 % B</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/percent#dyadic">Divide</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A % B <span class="rank">0</span> </td>
+    <td class="desc"><code>A</code> divided by <code>B</code> (note, that <code>(0 % 0) = 0</code>)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/percentdot">Matrix Inverse</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%. B <span class="rank">2</span> </td>
+    <td class="desc">inverse matrix of square matrix <code>B</code> or left inverse, if <code>B</code> is not square</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/percentdot#dyadic">Matrix Divide</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;A %. B <span class="rank">2</span> </td>
+    <td class="desc">equivalent to <code>(%. B) mux A</code>, where <code>mux</code> is <code>+/ . *</code> (see Matrix Product)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/percentco">Square Root</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%: B <span class="rank">0</span> </td>
+    <td class="desc">square root</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/percentco#dyadic">Root</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;A %: B <span class="rank">_</span> </td>
+    <td class="desc">the <code>A</code>-th root of <code>B</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/hat">Exponential</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ B <span class="rank">0</span> </td>
+    <td class="desc">the <code>B</code>-th power of e; the antilogarithm of a natural logarithm</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/hat#dyadic">Power</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A ^ B <span class="rank">0</span> </td>
+    <td class="desc">the <code>B</code>-th power of <code>A</code> (<code>0^0</code>, <code>_^0</code>, <code>1^_</code> are equal to <code>1</code>)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/hat#stope">Stope Function</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A ^ !.p B <span class="rank">0</span> </td>
+    <td class="desc">equivalent to <code>*/A + p * i. B</code>; the falling factorial when <code>p = _1</code>; see <a href="https://www.jsoftware.com/help/dictionary/samp28.htm">Stopes</a> and <a href="https://www.jsoftware.com/help/dictionary/d200.htm">Power</a> in Dictionary</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/hatdot">Natural Log</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^. y <span class="rank">0</span> </td>
+    <td class="desc">natural logarithm</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/hatdot#dyadic">Logarithm</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A ^. B <span class="rank">0</span> </td>
+    <td class="desc">logarithm of <code>A</code> to the base <code>B</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/hatco">Fixed Power</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] u ^: n y <span class="rank">_</span> </td>
+    <td class="desc">apply verb <code>u</code> (or <code>x&amp;u</code>, if dyadic) to <code>y</code>, <code>n</code> times</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/hatco">Fixed Power</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] u ^: &lt;n y <span class="rank">_</span> </td>
+    <td class="desc">apply verb <code>u</code> (or <code>x&amp;u</code>, if dyadic) to <code>y</code>, <code>(&lt;n)-1</code> times, collecting results into a list</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/hatco">If</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] u ^: h y <span class="rank">_</span> </td>
+    <td class="desc">conditionally execute a verb</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/hatco">Inverse, aka Obverse</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] u ^: _1 y <span class="rank">_</span> </td>
+    <td class="desc">execute the <a href="https://code.jsoftware.com/wiki/Vocabulary/Inverses">obverse</a> (usually the inverse) of a verb, "undo the effect of applying the verb"</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/hatco">Converge</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] u ^: a: y <span class="rank">_</span> </td>
+    <td class="desc">apply the verb until the result stops changing</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/hatco">Converge</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] u ^: _ y <span class="rank">_</span> </td>
+    <td class="desc">apply the verb until the result stops changing</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/hatco">Dynamic Power</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] u ^: v y <span class="rank">_</span> </td>
+    <td class="desc">equivalent to <code>(x&amp;u)^:(x v y)</code> or <code>u^:(v y)</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/hatco">Do-While</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] u ^: v^:_ y <span class="rank">_</span> </td>
+    <td class="desc">execute <code>u</code> repeatedly until <code>v^:_</code> returns <code>0</code> or <code>u</code> returns its argument unchanged</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/dollar">Shape Of</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$ y <span class="rank">_</span> </td>
+    <td class="desc">shape of the noun</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/dollar#dyadic">Shape</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;x $ y <span class="rank">_</span> </td>
+    <td class="desc">reshape, return an array of items of <code>y</code> whose <a href="https://code.jsoftware.com/wiki/Vocabulary/Glossary#Frame">frame</a> is <code>x</code> (if <code>1 &lt; #$y</code>, consider <code>$,</code>)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/dollardot">Sparse</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$. B <span class="rank">_</span> </td>
+    <td class="desc">convert a dense array to sparse (see <a href="https://www.jsoftware.com/help/dictionary/d211.htm">Dictionary</a>)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/dollardot#dyadic">Sparse</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;a $. B <span class="rank">_</span> </td>
+    <td class="desc">a collection of functions for creating and handling sparse arrays</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/dollarco">Self-Reference</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;[x] $: y <span class="rank">_</span> </td>
+    <td class="desc">recursion, denotes the longest verb that contains it (within a sentence); provide default value</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/tilde">Reflex</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u ~ y <span class="rank">_</span> </td>
+    <td class="desc">execute as a dyad with <code>x=y</code>, equivalent to <code>y u y</code></td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/tilde#dyadic">Passive</a></td>
+    <td class="code">&nbsp;&nbsp;<span class="rank">ru</span>&nbsp;x u ~ y <span class="rank">lu</span> </td>
+    <td class="desc">swap the arguments of a dyad, equivalent to <code>y u x</code></td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/tildem">Evoke</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m ~ <span class="rank"></span> </td>
+    <td class="desc">the value of the name <code>m</code>; works for non-nouns, in contast to <code>". m</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/tildedot">Nub</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~. y <span class="rank">_</span> </td>
+    <td class="desc">remove duplicates items, return only distinct items; order preserved</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/tildeco">Nub Sieve</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~: y <span class="rank">_</span> </td>
+    <td class="desc">boolean vector, <code>1</code> at positions of distinct items; <code>~. y</code> is equivalent to <code>(~: y) # y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/tildeco#dyadic">Not-Equal</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;x ~: y <span class="rank">0</span> </td>
+    <td class="desc">compare corresponding atoms, <code>0</code> if equal, <code>1</code> if not; use Not Match <code>-.@-:</code> to compare two entire nouns</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bar">Magnitude</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| B <span class="rank">0</span> </td>
+    <td class="desc">absolute value; magnitude, if the argument is complex</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bar#dyadic">Residue</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;a | B <span class="rank">0</span> </td>
+    <td class="desc">the remainder when dividing a given number <code>B</code> by another given number <code>a</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bardot">Reverse</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|. y <span class="rank">_</span> </td>
+    <td class="desc">rearrange the items in reverse order</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bardot#dyadic">Rotate</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;A |. y <span class="rank">_</span> </td>
+    <td class="desc">rotates successive axes of <code>y</code> by successive elements of <code>A</code> (positive - to left, negative - to right)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bardot#dyadicfit">Shift</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;A |. !.f y <span class="rank">_</span> </td>
+    <td class="desc">like Rotate, but use fill atom <code>f</code> to replace shifted out items</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bardot#monadicfit">Shift Right 1</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|. !.f y <span class="rank">_</span> </td>
+    <td class="desc">equivalent to <code>_1 |.!.f y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/barco">Transpose</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|: y <span class="rank">_</span> </td>
+    <td class="desc">reverse the axes (not the items!)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/barco#dyadic">Rearrange Axes</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;A |: y <span class="rank">_</span> </td>
+    <td class="desc">the axes having indices <code>A</code> become the new last axes</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/barco#More_Information">Extract Diagonal</a></td>
+    <td class="code">&nbsp;<span class="rank">1</span>&nbsp;(&lt; A) |: y <span class="rank">_</span> </td>
+    <td class="desc">extract a diagonal of the array</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/dot">Determinant</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u . v B <span class="rank">2</span> </td>
+    <td class="desc"><code>-/ . * B</code> is the determinant of the square matrix <code>B</code> (space before <code>.</code> is required)</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/dot#dyadic">Matrix Product</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;A u . v B <span class="rank">_</span> </td>
+    <td class="desc"><code>A +/ . * B</code> is the inner product or matrix product; dot product of two vectors</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/cor">Def</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m : n <span class="rank"></span> </td>
+    <td class="desc">define entities of all types (verbs, adverbs, conjunctions, nouns); see Direct Definition</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/NounExplicitDefinition">Def</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 : 0 <span class="rank"></span> </td>
+    <td class="desc">define a multiline noun (can be used as a multiline comment), a table</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/cor">Def</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 : 0 <span class="rank"></span> </td>
+    <td class="desc">define a multiline adverb</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/cor">Def</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 : 0 <span class="rank"></span> </td>
+    <td class="desc">define a multiline conjunction</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/cor">Def</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 : 0 <span class="rank"></span> </td>
+    <td class="desc">define a multiline monadic or dual-valence verb</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/cor">Def</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4 : 0 <span class="rank"></span> </td>
+    <td class="desc">define a multiline dyadic verb</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/cou">Monad-Dyad</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u : v <span class="rank"></span> </td>
+    <td class="desc">derive a dual-valence verb: verb <code>u</code> if called monadically, verb <code>v</code> if called dyadically</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/codot">Obverse</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u :. v <span class="rank"></span> </td>
+    <td class="desc">new verb that behaves as <code>u</code>, but its obverse is <code>v</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/coco">Adverse</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u :: v <span class="rank"></span> </td>
+    <td class="desc">run <code>v</code> if <code>u</code> fails (space after <code>u</code> is required)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/comma">Ravel</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;, y <span class="rank">_</span> </td>
+    <td class="desc">flatten; a list of all atoms in <code>y</code>, in the display order of <code>y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/comma#dyadic">Append</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x , y <span class="rank">_</span> </td>
+    <td class="desc">an array containing the items of <code>x</code> followed by the items of <code>y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/commadot">Ravel Items</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,. y <span class="rank">_</span> </td>
+    <td class="desc">a table where each row of the table comes from an item of <code>y</code> (no-op for tables)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/commadot#dyadic">Stitch</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x ,. y <span class="rank">_</span> </td>
+    <td class="desc">join each item of <code>x</code> to the corresponding item of <code>y</code>; equivalent to <code>x ,"_1 y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/commaco">Itemize</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,: y <span class="rank">_</span> </td>
+    <td class="desc">an array of shape <code>1, $y</code> with a single item <code>y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/commaco#dyadic">Laminate</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x ,: y <span class="rank">_</span> </td>
+    <td class="desc">a 2-item array with reshaped and itemized <code>x</code> as the first and <code>y</code> as the second item</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semi">Raze</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;; y <span class="rank">_</span> </td>
+    <td class="desc">remove one level of boxing, concatenate the contents of the boxes into one long array</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semi#dyadic">Link</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x ; y <span class="rank">_</span> </td>
+    <td class="desc">build up a list of boxed items (don't box <code>y</code> if it's already boxed); heterogeneous arrays</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semidot0">Reversed</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u ;. 0 y <span class="rank">_</span> </td>
+    <td class="desc">reverse <code>y</code> along all its axes, apply <code>u</code></td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semidot0#dyadic">Subarray</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">2</span>&nbsp;x u ;. 0 y <span class="rank">_</span> </td>
+    <td class="desc">extract subarray of <code>y</code>, described by <code>x</code>, apply <code>u</code> (<code>];.0</code> extracts w/o overtaking, unlike <code>{.</code>); substring</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semidot1">SelfIntervals</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u ;. 1 y <span class="rank">_</span> </td>
+    <td class="desc">split <code>y</code>, include frets (= first item, start of an interval), apply <code>u</code> on each interval</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semidot1">SelfIntervals</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u ;. _1 y <span class="rank">_</span> </td>
+    <td class="desc">split <code>y</code>, remove frets (= first item, start of an interval), apply <code>u</code> on each interval</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semidot1">SelfIntervals</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u ;. 2 y <span class="rank">_</span> </td>
+    <td class="desc">split <code>y</code>, include frets (= last item, end of an interval), apply <code>u</code> on each interval</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semidot1">SelfIntervals</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u ;. _2 y <span class="rank">_</span> </td>
+    <td class="desc">split <code>y</code>, remove frets (= last item, end of an interval), apply <code>u</code> on each interval</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semidot1#dyadic">Intervals</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;G u ;. 1 y <span class="rank">_</span> </td>
+    <td class="desc">split <code>y</code>, include frets (where <code>G=1</code>, start of an interval), apply <code>u</code> on each interval</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semidot1#dyadic">Intervals</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;G u ;. _1 y <span class="rank">_</span> </td>
+    <td class="desc">split <code>y</code>, remove frets (where <code>G=1</code>, start of an interval), apply <code>u</code> on each interval</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semidot1#dyadic">Intervals</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;G u ;. 2 y <span class="rank">_</span> </td>
+    <td class="desc">split <code>y</code>, include frets (where <code>G=1</code>, end of an interval), apply <code>u</code> on each interval</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semidot1#dyadic">Intervals</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;G u ;. _2 y <span class="rank">_</span> </td>
+    <td class="desc">split <code>y</code>, remove frets (where <code>G=1</code>, end of an interval), apply <code>u</code> on each interval</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semidot3#dyadic">Subarrays</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">2</span>&nbsp;x u ;. _3 y <span class="rank">_</span> </td>
+    <td class="desc">apply <code>u</code> to each tile of a regular tiling of <code>y</code> specified by <code>x</code></td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semidot3#dyadic">Subarrays</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">2</span>&nbsp;x u ;. 3 y <span class="rank">_</span> </td>
+    <td class="desc">like <code>u;._3</code>, except that the results from uncompleted tiles are not discarded</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semidot3">Max Cubes</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u ;. _3 y <span class="rank">_</span> </td>
+    <td class="desc">special case of <code>;._3</code>, where <code>x</code> holds the same size for all dimensions, given by <code>(#$y) $ &lt;./ $y</code></td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semidot3">Max Cubes</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u ;. 3 y <span class="rank">_</span> </td>
+    <td class="desc">special case of <code>;.3</code>, where <code>x</code> holds the same size for all dimensions, given by <code>(#$y) $ &lt;./ $y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semico">Words</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;: y <span class="rank">1</span> </td>
+    <td class="desc">partition a string into boxed words according to J's rules for word formation; tokenize; split</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/semico#dyadic">Sequential Machine</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x ;: y <span class="rank">_</span> </td>
+    <td class="desc">partition a string <code>y</code> according to the rules of a given finite-state machine defined by <code>x</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/number">Tally</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# y <span class="rank">_</span> </td>
+    <td class="desc">count the items</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/number#dyadic">Copy</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;A # y <span class="rank">_</span> </td>
+    <td class="desc"><code>A</code> controls how many times a corresponding item of <code>y</code> appears in a new array</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/numberdot">Base Two</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#. G <span class="rank">1</span> </td>
+    <td class="desc">convert a binary list to an integer <code>5 -: #. 1 0 1</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/numberdot#dyadic">Base</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;A #. B <span class="rank">1</span> </td>
+    <td class="desc">generalized <code>#.B</code> to bases other than 2 (including mixed bases); weighted sum</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/numberco">Antibase Two</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#: B <span class="rank">_</span> </td>
+    <td class="desc">binary expansion of <code>B</code> as a Boolean list (two's complement form for negative numbers)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/numberco#dyadic">Antibase</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;A #: B <span class="rank">0</span> </td>
+    <td class="desc">generalized <code>#:B</code> to bases other than 2 (including mixed bases); modulo; quotient/remainder; whole/fractional</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/Inverses#ConvertToBaseX">Base Inverse</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;a #. ^:_1 B <span class="rank">_</span> </td>
+    <td class="desc">convert <code>B</code> to fixed base <code>a</code> (finds out length of the result automatically, unlike <code>#:</code>)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bang">Factorial</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;! B <span class="rank">0</span> </td>
+    <td class="desc">factorial; generally, compute the <a href="https://en.wikipedia.org/wiki/Gamma_function">Gamma function</a> of <code>1+B</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bang#dyadic">Out Of</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A ! B <span class="rank">0</span> </td>
+    <td class="desc"><code>B</code>-Combinations-<code>A</code>; number of ways to choose <code>A</code> items from <code>B</code>; binomial coefficients; <a href="https://en.wikipedia.org/wiki/Pascal%27s_triangle">Pascal's triangle</a></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bangdot">Fit (Customize)</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">lu</span>&nbsp;u !. n <span class="rank">ru</span> </td>
+    <td class="desc">variants of primitive verb: adjust comparison tolerance, fill atom, print precision, compensated sum, etc</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bangco">Foreign</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;m !: n <span class="rank">0</span> </td>
+    <td class="desc"><a href="https://code.jsoftware.com/wiki/Vocabulary/Foreigns">system functions</a></td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/slash">Insert</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u / y <span class="rank">_</span> </td>
+    <td class="desc">inserts (dyad) <code>u</code> between the items of <code>y</code>; reduce</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/slash#dyadic">Table</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x u / y <span class="rank">_</span> </td>
+    <td class="desc">a table (if <code>0 = #$u</code>) having entries <code>a u b</code> for every <code>a</code> in <code>x</code> and <code>b</code> in <code>y</code>; equivalent to <code>x u"(lu,_) y</code></td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/slashdot">Oblique</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u /. y <span class="rank">_</span> </td>
+    <td class="desc">apply <code>u</code> to the oblique diagonals of table <code>y</code></td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/slashdot#dyadic">Key</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x u /. y <span class="rank">_</span> </td>
+    <td class="desc">apply <code>u</code> to each partition of <code>y</code>, based on keys from <code>x</code>; group by</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/slashco">Grade Up</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/: y <span class="rank">_</span> </td>
+    <td class="desc">permutation that sorts the items of <code>y</code> into ascending order (stable sort)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/slashco#dyadic">Sort Up [Using]</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x /: y <span class="rank">_</span> </td>
+    <td class="desc">apply to list <code>x</code> the permutation that sorts list <code>y</code> into ascending order; equivalent to <code>(/: y) { x</code>; sort <code>/:~y</code></td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bslash">Prefix</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u \ y <span class="rank">_</span> </td>
+    <td class="desc">apply <code>u</code> to successive prefixes of <code>y</code> of increasing length (the main use is in <code>u/\</code>, e.g. cumulative sum)</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bslash#dyadic">Infix</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;a u \ y <span class="rank">_</span> </td>
+    <td class="desc">apply <code>u</code> to successive (overlapping if <code>a &gt; 0</code>) parts of <code>y</code>; sliding window</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bslashdot">Suffix</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u \. y <span class="rank">_</span> </td>
+    <td class="desc">apply <code>u</code> to successive suffixes of <code>y</code> of decreasing length (the main use is in <code>u/\.</code>, calculated in reverse order)</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bslashdot#dyadic">Outfix</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x u \. y <span class="rank">_</span> </td>
+    <td class="desc">apply <code>u</code> to <code>y</code> with successive (overlapping if <code>x &gt; 0</code>) parts removed</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/slashco">Grade Down</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\: y <span class="rank">_</span> </td>
+    <td class="desc">permutation that sorts the items of <code>y</code> into descending order (stable sort)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/slashco#dyadic">Sort Down [Using]</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x \: y <span class="rank">_</span> </td>
+    <td class="desc">apply to list <code>x</code> the permutation that sorts list <code>y</code> into descending order; equivalent to <code>(\: y) { x</code>; sort <code>\:~y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/squarelf">Same</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ y <span class="rank">_</span> </td>
+    <td class="desc">return <code>y</code> unchanged; equivalent to <code>y</code> and to <code>] y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/squarelf#dyadic">Left</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x [ y <span class="rank">_</span> </td>
+    <td class="desc">return <code>x</code>; separate assignments on the same line; useful in tacit verbs to get the value of <code>x</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/squarelfco">Cap</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;[x] [: y <span class="rank">_</span> </td>
+    <td class="desc">in tacit phrase <code>[: f g</code> equivalent to <code>g@:h</code>; domain error as monad or dyad</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/squarert">Same</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;] y <span class="rank">_</span> </td>
+    <td class="desc">return <code>y</code> unchanged; equivalent to <code>y</code> and to <code>[ y</code>; useful to display assignment as in <code>] z =: i:2</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/squarert#dyadic">Right</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x ] y <span class="rank">_</span> </td>
+    <td class="desc">return <code>y</code>; useful to separate two numeric atoms to prevent J treating them as a single list <code>i."0 ] 3 4 5</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/curlylf">Catalogue</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ y <span class="rank">1</span> </td>
+    <td class="desc">combine items from the atoms inside a boxed list to form a catalogue; <a href="https://en.wikipedia.org/wiki/Cartesian_product">Cartesian product</a></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/curlylf#dyadic">From</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A { y <span class="rank">_</span> </td>
+    <td class="desc">select the item with index <code>A</code> from <code>y</code>; index along multiple axes, select subarrays, etc with boxed <code>A</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/curlylfdot">Head</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{. y <span class="rank">_</span> </td>
+    <td class="desc">the first item of <code>y</code>; convert a single-item list into an atom</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/curlylfdot#dyadic">Take</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;A {. y <span class="rank">_</span> </td>
+    <td class="desc">the first (last if <code>A</code> is negative) <code>A</code> items of <code>y</code>; if <code>A &gt; #y</code>, the result will have <code>A</code> items (fill atoms added)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/curlylfco">Tail</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{: y <span class="rank">_</span> </td>
+    <td class="desc">the last item of <code>y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/curlylfcoco">Map</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{:: y <span class="rank">_</span> </td>
+    <td class="desc">a map of a boxed noun <code>y</code> (same box structure, but leafs replaced with paths); not the Lisp <code>map</code>!</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/curlylfcoco#dyadic">Fetch</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;x {:: y <span class="rank">_</span> </td>
+    <td class="desc">a list of the contents of selected boxes in a boxed noun <code>y</code>; select from a deep structure (a tree)</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/curlyrt">Composite Item</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m } y <span class="rank">_</span> </td>
+    <td class="desc"><code>m</code> (of the same shape as an item of <code>y</code>) selects atoms from the corresponding positions of the items of a list <code>y</code></td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/curlyrt#dyadic">Amend</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x m } y <span class="rank">_</span> </td>
+    <td class="desc">a copy of <code>y</code> with the locations <code>m</code> replaced by new values <code>x</code>; modify positions</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/curlyrtdot">Behead</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}. y <span class="rank">_</span> </td>
+    <td class="desc">drop the first item</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/curlyrtdot#dyadic">Drop</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;x }. y <span class="rank">_</span> </td>
+    <td class="desc">drop the first (the last, if <code>x</code> is negative) <code>x</code> items</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/curlyrtco">Curtail</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}: y <span class="rank">0</span> </td>
+    <td class="desc">drop the last item; equivalent to <code>_1 }. y</code></td>
+</tr>
+
+<tr class="control">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/DirectDefinition">DirectDefinition</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ }} <span class="rank"></span> </td>
+    <td class="desc">shorthand for writing [multiline] [nested] explicit definitions (verbs, adverbs, conjunctions, nouns)</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/quote">Assign Rank</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u &quot; n <span class="rank"></span> </td>
+    <td class="desc">apply <code>u</code> to each <code>n</code>-cell (corresponding <code>n</code>-cells, if dyadic); the most-used modifier in J (like a [nested] loop)</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/quotem">Constant Verb</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m &quot; n <span class="rank"></span> </td>
+    <td class="desc">a verb with rank <code>n</code>, that produces <code>m</code> for each <code>n</code>-cell of its argument(s)</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/quotev">Copy Rank</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u &quot; v <span class="rank"></span> </td>
+    <td class="desc"><code>u"v</code> and <code>m"v</code> are equivalent to <code>u"n</code> and <code>m"n</code> respectively, where <code>n</code> is the list of ranks of <code>v</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/quotedot">Do</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;. S <span class="rank">1</span> </td>
+    <td class="desc">execute the sentence <code>S</code>, return the result; string to number (not safe, use the dyad)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/quotedot#dyadic">Numbers</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;a &quot;. S <span class="rank">_</span> </td>
+    <td class="desc">convert a byte array <code>S</code> (a string) into numbers with ill-formed numbers replaced by <code>a</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/quoteco">Default Format</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;: y <span class="rank">_</span> </td>
+    <td class="desc">convert <code>y</code> to a byte array (a string)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/quoteco#dyadic">Format</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;x &quot;: y <span class="rank">_</span> </td>
+    <td class="desc">convert <code>y</code> (numeric or boxed) to a byte array (a string) formatted according to the specification <code>x</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/grave">Tie (Gerund)</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u ` v <span class="rank"></span> </td>
+    <td class="desc">combine verbs into a single noun to be used as an operand to a modifier (commonly used with <code>/</code> and <code>@.</code>)</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/graveco">Evoke Gerund</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;m `: n <span class="rank">_</span> </td>
+    <td class="desc">turn a gerund into verb; <code>n=0</code>, apply each verb separately; <code>n=3</code>, equivalent to <code>m/</code>; <code>n=6</code>, verb train</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/at">Atop</a></td>
+    <td class="code"><span class="rank">lv</span>&nbsp;[x] u @ v y <span class="rank">rv</span> </td>
+    <td class="desc">composition: apply <code>u</code> monad on the result of each application of <code>v</code> to each cell of the argument(s)</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/atdot">Agenda</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m @. n <span class="rank"></span> </td>
+    <td class="desc">a verb defined by the <code>n</code>-th atom from gerund <code>m</code>; a train of verbs, if <code>n</code> is a list; boxes indicate parentheses</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/atdot">Agenda</a></td>
+    <td class="code"><span class="rank">lv</span>&nbsp;[x] m @. v y <span class="rank">rv</span> </td>
+    <td class="desc">result of <code>[x] v y</code> used to select a verb <code>w</code> from <code>m</code>, then <code>[x] w y</code>; e.g. if-statement per cell</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/atco">At</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] u @: v y <span class="rank">_</span> </td>
+    <td class="desc">equivalent to <code>u [x] v y</code>; <code>u</code> is executed on the entire result of <code>v</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ampm">Bond</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m &amp; v <span class="rank">_</span> </td>
+    <td class="desc">make a monad out of a dyad <code>v</code> by supplying the noun value <code>m</code> as the left argument of <code>v</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ampm">Bond</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u &amp; n <span class="rank">_</span> </td>
+    <td class="desc">make a monad out of a dyad <code>u</code> by supplying the noun value <code>n</code> as the right argument of <code>u</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ampm#dyadic">Bond</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;x m &amp; v y <span class="rank">_</span> </td>
+    <td class="desc">apply <code>m&amp;v</code> to <code>y</code> repeatedly <code>x</code> times; equivalent to  <code>x (m&amp;v @ ] ^: [) y</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ampm#dyadic">Bond</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;x u &amp; n y <span class="rank">_</span> </td>
+    <td class="desc">apply <code>u&amp;n</code> to <code>y</code> repeatedly <code>x</code> times; equivalent to  <code>x (u&amp;n @ ] ^: [) y</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ampv">Compose</a></td>
+    <td class="code"><span class="rank">mv</span>&nbsp;[x] u &amp; v y <span class="rank">mv</span> </td>
+    <td class="desc">apply <code>v</code> to each cell of each argument, then apply <code>u</code> to the results for each cell separately</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ampdot">Under (Dual)</a></td>
+    <td class="code"><span class="rank">mv</span>&nbsp;[x] u &amp;. v y <span class="rank">mv</span> </td>
+    <td class="desc">on each cell apply <code>v</code>, <code>u</code>, the obverse of <code>v</code>; e.g. <code>u&amp;.&gt;</code> to apply <code>u</code> inside each box</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ampdot">Semidual</a></td>
+    <td class="code">&nbsp;&nbsp;<span class="rank">mv</span>&nbsp;x u &amp;. (a:`v) y <span class="rank">mv</span> </td>
+    <td class="desc">same as <code>u&amp;.(a:`v)</code>, but apply <code>(a:`v)</code> only to <code>y</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ampdot">Semidual</a></td>
+    <td class="code">&nbsp;&nbsp;<span class="rank">mv</span>&nbsp;x u &amp;. (v`a:) y <span class="rank">mv</span> </td>
+    <td class="desc">same as <code>u&amp;.(v`a:)</code>, but apply <code>(v`a:)</code> only to <code>x</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ampco">Appose</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] u &amp;: v y <span class="rank">_</span> </td>
+    <td class="desc">apply <code>v</code> monad to each argument in its entirety, apply <code>u</code> to the results</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ampdotco">Under</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] u &amp;.: v y <span class="rank">_</span> </td>
+    <td class="desc">apply <code>v</code>, <code>u</code>, the obvserse of <code>v</code>; supports Semiduals; equivalent to <code>v^:_1 [(v x)] u (v y)</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/query">Roll</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;? B <span class="rank">0</span> </td>
+    <td class="desc">a random number uniformly distributed in a range determined by <code>B</code>; <code>B=0</code> for floats in (0, 1); <code>B&gt;1</code> for integers</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/query#dyadic">Deal</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;A ? B <span class="rank">0</span> </td>
+    <td class="desc">select <code>A</code> items at random (without repetition) from the list <code>i.B</code>; be careful if using it with explicit-to-tacit translator</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/querydot">Roll / fixed seed</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;?. y <span class="rank">_</span> </td>
+    <td class="desc">like Roll, but the random-number generator is reset each time <code>?.</code> is executed; useful for reproducible samples</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/querydot">Deal / fixed seed</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;x ?. y <span class="rank">0</span> </td>
+    <td class="desc">like Deal, but the random-number generator is reset each time <code>?.</code> is executed; useful for reproducible samples</td>
+</tr>
+
+<tr class="noun">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/adot">Alphabet</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a. <span class="rank"></span> </td>
+    <td class="desc">a built-in list of all bytes; ASCII characters</td>
+</tr>
+
+<tr class="noun">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/aco">Ace (Boxed Empty)</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a: <span class="rank"></span> </td>
+    <td class="desc">an atom consisting of the boxed empty list <code>&lt;0$0</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/acapdot">Anagram Index</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A. B <span class="rank">1</span> </td>
+    <td class="desc">convert the permutation <code>B</code> into its permutation number (anagram index)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/acapdot#dyadic">Anagram</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;a A. y <span class="rank">_</span> </td>
+    <td class="desc">reorder items of <code>y</code> by applying the permutation of length <code>#y</code> with anagram index <code>a</code></td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bdot">Boolean</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] m b. y <span class="rank">_</span> </td>
+    <td class="desc">a verb to perform logic on the bit(s) of <code>y</code> (and <code>x</code>, if present); <code>m</code> selects the logic to apply</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bdot">Boolean</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] m b. y <span class="rank">_</span> </td>
+    <td class="desc"><code>m</code> <code>0</code> to <code>15</code> (same for <code>_16</code> to <code>_1</code>): logical function, truth table encoded by <code>m</code>, e.g. <code>1</code> for AND, <code>6</code> for XOR, <code>7</code> for OR</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bdot">Bitwise</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] m b. y <span class="rank">_</span> </td>
+    <td class="desc"><code>m</code> <code>16</code> to <code>31</code>: bitwise logical function, truth table encoded by <code>m</code>, e.g. <code>17</code> for AND, <code>22</code> for XOR, <code>23</code> for OR</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bdot">Bitwise Rotate</a></td>
+    <td class="code"><span class="rank">_</span>&nbsp;[x] 32 b. y <span class="rank">_</span> </td>
+    <td class="desc">left-rotate bits of <code>y</code> by <code>x</code> positions; use negative <code>x</code> to right-rotate</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bdot">Unsigned Bitwise Shift</a></td>
+    <td class="code"><span class="rank">_</span>&nbsp;[x] 33 b. y <span class="rank">_</span> </td>
+    <td class="desc">unsigned left-shift bits of <code>y</code> by <code>x</code> positions; use negative <code>x</code> to right-shift</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bdot">Signed Bitwise Shift</a></td>
+    <td class="code"><span class="rank">_</span>&nbsp;[x] 34 b. y <span class="rank">_</span> </td>
+    <td class="desc">signed left-shift bits of <code>y</code> by <code>x</code> positions; use negative <code>x</code> to right-shift</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bdotu">Verb Information</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u b. _1 <span class="rank"></span> </td>
+    <td class="desc">linear representation of the obvserse of <code>u</code></td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bdotu">Verb Information</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u b. 0 <span class="rank"></span> </td>
+    <td class="desc">ranks of <code>u</code></td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/bdotu">Verb Information</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u b. _1 <span class="rank"></span> </td>
+    <td class="desc">linear representation of the identity function of <code>u</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ccapdot">Cycle-Direct</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C. B <span class="rank">1</span> </td>
+    <td class="desc">convert the permutation <code>B</code> between direct and cycle representations</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ccapdot#permparity">Permutation Parity</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C. !.2 y <span class="rank">1</span> </td>
+    <td class="desc">the <a href="https://en.wikipedia.org/wiki/Levi-Civita_symbol">Levi-Civita symbol</a> (ε) of <code>y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ccapdot#dyadic">Permute</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;x C. y <span class="rank">_</span> </td>
+    <td class="desc">apply the permutation <code>x</code> to the items of <code>x</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/edot">Raze In</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e. y <span class="rank">_</span> </td>
+    <td class="desc">a Boolean table comparing each box of <code>y</code> (a list of boxed items) against each atom in <code>;y</code> (the Raze of <code>y</code>)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/edot#dyadic">Member (In)</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x e. y <span class="rank">_</span> </td>
+    <td class="desc">return <code>1</code> if item <code>y</code> is in array <code>y</code>, otherwise <code>0</code>; contains/includes</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ecapdot#dyadic">Find Matches</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x E. y <span class="rank">_</span> </td>
+    <td class="desc">a Boolean array (shape of <code>y</code>) indicating starting points in <code>y</code> of subarrays equal to <code>x</code>; matching substrings</td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/fdot">Fix</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u f. <span class="rank">_</span> </td>
+    <td class="desc">replace each name in <code>u</code> with a fixed value without name dependencies; doesn't work with explicit definitions</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/fcap">Fold Multiple Forward</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;[x] u F:. v y <span class="rank"></span> </td>
+    <td class="desc">process <code>y</code> left-to-right with <code>v</code> (a recurrence relation), apply <code>u</code> on each item, return all; <code>x</code> is initial arg to <code>v</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/fcap">Fold Multiple Reverse</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;[x] u F:: v y <span class="rank"></span> </td>
+    <td class="desc">process <code>y</code> right-to-left with <code>v</code> (a recurrence relation), apply <code>u</code> on each item, return all; <code>x</code> is initial arg to <code>v</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/fcap">Fold Multiple</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;[x] u F: v y <span class="rank"></span> </td>
+    <td class="desc"><code>v</code> (a recurrence relation) builds a sequence, apply <code>u</code> on each item, halt with <code>Z:</code>, return all; <code>x</code> is arg to <code>v</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/fcap">Fold Single Forward</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;[x] u F.. v y <span class="rank"></span> </td>
+    <td class="desc">process <code>y</code> left-to-right with <code>v</code> (a recurrence relation), apply <code>u</code> on each item, return last; <code>x</code> is initial arg to <code>v</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/fcap">Fold Single Reverse</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;[x] u F.: v y <span class="rank"></span> </td>
+    <td class="desc">process <code>y</code> right-to-left with <code>v</code> (a recurrence relation), apply <code>u</code> on each item, return last; <code>x</code> is initial arg to <code>v</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/fcap">Fold Single</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;[x] u F. v y <span class="rank"></span> </td>
+    <td class="desc"><code>v</code> (a recurrence relation) builds a sequence, apply <code>u</code> on each item, halt with <code>Z:</code>, return last; <code>x</code> is arg to <code>v</code></td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/hcapdot">Hypergeometric</a></td>
+    <td class="code">&nbsp;<span class="rank">0</span>&nbsp;[x] m H. n y <span class="rank">0</span> </td>
+    <td class="desc">sum <code>x</code> terms of a generalized hypergeometric series; <code>m</code> and <code>n</code> describe the series</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/idot">Integers</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i. y <span class="rank">1</span> </td>
+    <td class="desc">an ascending sequence of integers; shape is <code>|y</code>; a negative atom in <code>y</code> reverses along corresponding dimension</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/idot#dyadic">Index Of</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x i. y <span class="rank">_</span> </td>
+    <td class="desc">find the first occurence of <code>y</code> in <code>x</code>; return <code>#x</code>, if not found; for sorted lists of integers <code>i.!.1</code> is faster</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ico">Steps</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i: B <span class="rank">0</span> </td>
+    <td class="desc">a sequence of integers from <code>-B</code> to <code>+B</code>; <code>b</code> in a complex number <code>(a j. b)</code> gives the number of steps between</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ico#dyadic">Index Of Last</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x i: y <span class="rank">_</span> </td>
+    <td class="desc">find the last occurence of <code>y</code> in <code>x</code>; return <code>#x</code>, if not found (same as for <code>i.</code>)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/icapdot">Indices</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I. H <span class="rank">1</span> </td>
+    <td class="desc">indexes of all <code>1</code>'s in <code>H</code>; equivalent to <code>H # i. # H</code>; if an atom of <code>H</code> is greater than <code>1</code>, the index is repeated</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/icapdot#dyadic">Interval Index</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;A I. y <span class="rank">_</span> </td>
+    <td class="desc">binary search; <code>A</code> should be sorted (either in ascending or descending order)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/jdot">Imaginary</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j. y <span class="rank">0</span> </td>
+    <td class="desc">multiply <code>y</code> by <code>0j1</code>, which represents the imaginary unit i; equivalent to <code>0j1 * y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/jdot#dyadic">Complex</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;x j. y <span class="rank">0</span> </td>
+    <td class="desc">combine <code>x</code> and <code>y</code> into a complex number; equivalent to <code>x + 0j1 * y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/lcapdot">Level Of</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L. y <span class="rank">_</span> </td>
+    <td class="desc">the greatest level of nesting of a boxed noun, or <code>0</code> if unboxed</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/lcapco#dyadic">Level At</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] u L: n y <span class="rank">_</span> </td>
+    <td class="desc">the same box structure but contents of each box on level <code>n</code> (<code>0</code> for leaves) modified by <code>u</code></td>
+</tr>
+
+<tr class="adverb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/mcapdot">Memo</a></td>
+    <td class="code"><span class="rank">lu</span>&nbsp;[x] u M. y <span class="rank">ru</span> </td>
+    <td class="desc">memoization; records only atomic arguments; user can't control the size of the table</td>
+</tr>
+
+<tr class="noun">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/ncapbcapdot">Comment</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NB. <span class="rank"></span> </td>
+    <td class="desc">everything from <code>NB.</code> to the end-of-line (<code>LF</code>) will be ignored by the interpreter</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/odot">Pi Times</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o. y <span class="rank">0</span> </td>
+    <td class="desc">π times <code>y</code> given any number <code>y</code>; <code>1p1 = o. 1</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/odot#dyadic">Circle Function</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;x o. y <span class="rank">0</span> </td>
+    <td class="desc">trigonometric and hyperbolic functions, their inverses; <a href="https://www.jsoftware.com/papers/eem/storyofo.htm">The Story of ○</a></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/pdot">Roots</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p. y <span class="rank">1</span> </td>
+    <td class="desc">convert the polynomial <code>y</code> between coefficient and multiplier-and-roots form</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/pdot#dyadic">Polynomial</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">1</span>&nbsp;x p. y <span class="rank">0</span> </td>
+    <td class="desc">evaluate polynomial <code>x</code> for given value(s) of <code>y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/pdotdot">Polynomial Derivative</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p.. y <span class="rank">1</span> </td>
+    <td class="desc">the first derivative of a given polynomial <code>y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/pdotdot#dyadic">Polynomial Integral</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;x p.. y <span class="rank">1</span> </td>
+    <td class="desc">the integral of a given polynomial <code>y</code>; <code>x</code> is the constant of integration that will be added to the result</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/pco">Primes</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p: y <span class="rank">0</span> </td>
+    <td class="desc">the <code>y</code>-th prime (starting with <code>2</code> as the <code>0</code>-th prime); the inverse <code>p:^:_1 y</code> tells the number of primes less than <code>y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/pco#dyadic">Primes</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x p: y <span class="rank">_</span> </td>
+    <td class="desc">a collection of prime-related functions of integer <code>y</code>, with <code>x</code> selecting the function</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/pco#dyadic">Primes</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;_4 p: y <span class="rank">_</span> </td>
+    <td class="desc">the largest prime smaller than <code>y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/pco#dyadic">Primes</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;_1 p: y <span class="rank">_</span> </td>
+    <td class="desc">π(<code>y</code>), the number of primes less than <code>y</code> (same as <code>p:^:_1</code>)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/pco#dyadic">Primes</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;0 p: y <span class="rank">_</span> </td>
+    <td class="desc"><code>1</code> if <code>y</code> is not prime</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/pco#dyadic">Primes</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;1 p: y <span class="rank">_</span> </td>
+    <td class="desc"><code>1</code> if <code>y</code> is prime</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/pco#dyadic">Primes</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;2 p: y <span class="rank">_</span> </td>
+    <td class="desc">a 2-row table of the prime factors and exponents in the factorization of <code>y</code> (same as <code>__ q: y</code>)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/pco#dyadic">Primes</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;3 p: y <span class="rank">_</span> </td>
+    <td class="desc">the list of primes whose product is equal to <code>y</code> (same as <code>q: y</code>)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/pco#dyadic">Primes</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;4 p: y <span class="rank">_</span> </td>
+    <td class="desc">the smallest prime larger than <code>y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/pco#dyadic">Primes</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;5 p: y <span class="rank">_</span> </td>
+    <td class="desc">the number of integers less than or equal to <code>y</code> that are relatively prime to <code>y</code> (Euler's totient function φ(y))</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/qco">Prime Factors</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;q: y <span class="rank">0</span> </td>
+    <td class="desc">the prime factorization of integer <code>y</code>, listed in ascending order; same as <code>3 p: y</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/qco#dyadic">Prime Exponents</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;x q: y <span class="rank">0</span> </td>
+    <td class="desc">primes and exponentes in the factorization of <code>y</code>; <code>x&gt;0</code>, the leading exponents; <code>x&lt;0</code>, table, trailing, zeros excluded</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/rdot">Angle</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r. y <span class="rank">0</span> </td>
+    <td class="desc">angle <code>y</code> (in radians), expressed as a unit vector in the complex plane</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/rdot#dyadic">Polar</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">0</span>&nbsp;x r. y <span class="rank">0</span> </td>
+    <td class="desc">like monadic <code>(r.)</code>, but with a scaling factor <code>x</code>; equivalent to <code>x * (r. y)</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/sco">Symbol</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s: y <span class="rank">_</span> </td>
+    <td class="desc">intern a boxed string; some operations on symbols are faster, than on boxed strings (search, comparison)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/sco#dyadic">Symbol</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x s: y <span class="rank">_</span> </td>
+    <td class="desc">verbs for working with symbol sets: table of symbols, store/restore the global symbols data, etc</td>
+</tr>
+
+<tr class="conj">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/scapco">Spread</a></td>
+    <td class="code">&nbsp;<span class="rank">_</span>&nbsp;[x] u S: n y <span class="rank">_</span> </td>
+    <td class="desc">apply <code>u</code> to contents of each box on level <code>n</code> (<code>0</code> for leaves), collect results into an array (compare with <code>L:</code>)</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/uco">Unicode</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u: y <span class="rank">_</span> </td>
+    <td class="desc">convert an integer <code>y</code> to the unicode character having <code>y</code> as its code point; convert a character to unicode precision</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/uco#dyadic">Unicode</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x u: y <span class="rank">_</span> </td>
+    <td class="desc">convert between numbers, character precisions and encodings according to the Unicode and UTF-8 standards</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/xco">Extended Precision</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x: y <span class="rank">_</span> </td>
+    <td class="desc">convert a number <code>y</code> to extended precision, either extended integer or rational</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/xco#dyadic">Num/Denom</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x x: y <span class="rank">_</span> </td>
+    <td class="desc">convert a number <code>y</code> of any precision to a precision chosen by <code>x</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/zcapco">Terminate Fold</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;x Z: y <span class="rank">_</span> </td>
+    <td class="desc">terminate Fold, in whole or part</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/zeroco">Constant Function</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;<span class="rank">_</span>&nbsp;[x] 0: y <span class="rank">_</span> </td>
+    <td class="desc">the value <code>0</code>, whatever the arguments happen to be; has sister-primitives <code>_:</code>, <code>1:</code>, ..., <code>9:</code> and <code>_1:</code>, ..., <code>_9:</code></td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/udot">Enhanced Operand</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u. <span class="rank">_</span> </td>
+    <td class="desc">find the value of <code>u</code> in current namespace, switch to a previous namespace, execute the value there</td>
+</tr>
+
+<tr class="verb">
+    <td class="name"><a class="link" href="https://code.jsoftware.com/wiki/Vocabulary/udot">Enhanced Operand</a></td>
+    <td class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v. <span class="rank">_</span> </td>
+    <td class="desc">find the value of <code>v</code> in current namespace, switch to a previous namespace, execute the value there</td>
+</tr>
+
+        </table>
+    </body>
+</html>
