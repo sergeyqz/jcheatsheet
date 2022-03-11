@@ -1,0 +1,12 @@
+This is the source of a one-page plain HTML table [[https://sergeyqz.github.io/jcheatsheet/][cheatsheet for J language]] with all its primitives (horizontally aligned on the same column for easier visual search), short descriptions with synonyms, and links to NuVoc.
+
+I started learning J language in April 2021. I read the [[https://www.jsoftware.com/help/learning/contents.htm][Learning J]] book, [[https://code.jsoftware.com/wiki/NuVoc][NuVoc]] pages, some essays and various blog posts. My primary use case was to solve algorithmic problems on Android phone. But I found out that NuVoc, unlike J language itself, was not mobile-friendly. I needed a linear table so it's easy to scroll and find a necessary row without entering the symbols into the search field. It was worth to read through all NuVoc pages anyway, and to make learning more active, I compiled the table, and it definetely helped me to solve some Project Euler and Advent of Code problems last year.
+
+There's still much work to do (I'm sure there are mistakes), but I find the table useful as it is right now, so I decided to share it.
+
+Other cheat sheets:
+
+  - [[https://www.jsoftware.com/books/pdf/brief.pdf][A Brief J Reference]] [pdf]
+  - https://github.com/dankilman/j-cheat-sheet/blob/master/cheat-sheet.ijs
+
+Contributions are welcome, but please note, that the ~data.tsv~ file is not the original source of the table. The real table is on Google Sheets (which was not perfect, but I couldn't find a better alternative). So if you want to update the table, just [[https://github.com/sergeyqz/jcheatsheet/issues/new/choose][file an issue]], describe the change and I'll update it myself.
