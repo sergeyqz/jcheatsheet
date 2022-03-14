@@ -20,7 +20,7 @@
 	gtco	verb	Increment				>:		B		0	equivalent to ``RN + 1``	full			0
 	gtco#dyadic	verb	Larger Or Equal		A		>:		B	0	0	compare corresponding atoms, wherever ``LN`` is greater than, or equal to, ``RN``, return ``1``, else ``0``	full		A 	2
 	under	noun	Negative Sign				_					as the first character of a numeric constant, acts as a negative sign	full			0
-	under	noun	Infinity				_					standing by itself, represents the value Infinity (an IEEE floating-point value)	full			0
+	under	noun	Infinity				_					standing by itself, represents the value Infinity	full			0
 	underdot	noun	Indeterminate				_.					a placeholder broadly comparable with NaN (not a number)	full			0
 	underco	verb	Infinite	1	x		_:		y	_	_	Infinity (``_``), whatever the arguments happen to be	full		[x] 	4
 	plus	verb	Conjugate				+		B		0	complex conjugate of the number	full			0
