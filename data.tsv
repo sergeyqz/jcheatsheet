@@ -51,7 +51,7 @@
 	hat#dyadic	verb	Power		A		^		B	0	0	the ``RN``-th power of ``LN`` (``0^0``, ``_^0``, ``1^_`` are equal to ``1``)	full		A 	2
 	hat#stope	verb	Stope Function		A		^	!.p	B	0	0	equivalent to ``*/LN + p * i. RN``; the falling factorial when ``p = _1``; see [Stopes](https://www.jsoftware.com/help/dictionary/samp28.htm) and [Power](https://www.jsoftware.com/help/dictionary/d200.htm) in Dictionary	full		A 	2
 	hatdot	verb	Natural Log				^.		y		0	natural logarithm	full			0
-	hatdot#dyadic	verb	Logarithm		A		^.		B	0	0	logarithm of ``LN`` to the base ``RN``	full		A 	2
+	hatdot#dyadic	verb	Logarithm		A		^.		B	0	0	logarithm of ``RN`` to the base ``LN``	full		A 	2
 	hatco	conj	Fixed Power	1	x	u	^:	n	y	_	_	apply verb ``LMO`` (or ``LN&LMO``, if dyadic) to ``RN``, ``RMO`` times	full		[x] u 	6
 	hatco	conj	Fixed Power	1	x	u	^:	<n	y	_	_	apply verb ``LMO`` (or ``LN&LMO``, if dyadic) to ``RN``, ``(RMO)-1`` times, collecting results into a list	full		[x] u 	6
 	hatco	conj	If	1	x	u	^:	h	y	_	_	conditionally execute a verb	full		[x] u 	6
